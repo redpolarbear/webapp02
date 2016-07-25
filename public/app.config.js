@@ -29,6 +29,14 @@ angular.
           templateUrl: 'account/tmpl/account.tmpl.html',
           controller: 'AccountController'
         })
+        .when('/signup', {
+          templateUrl: 'account/tmpl/signup.tmpl.html',
+          controller: 'AccountController'
+        })
+        .when('/login', {
+          templateUrl: 'account/tmpl/login.tmpl.html',
+          controller: 'AccountController'
+        })
         .otherwise({redirectTo: '/'});
 
       $locationProvider.html5Mode(true);

@@ -1,0 +1,32 @@
+<md-content flex id="content" layout="column" class="md-padding" ng-controller="AccountController as ac">
+  <div flex layout="column" ng-cloak>
+    <md-card>
+      <md-card-title>
+        <md-card-title-text>
+          <span class="md-headline">Sign Up</span>
+        </md-card-title-text>
+      </md-card-title>
+      <md-card-content>
+        <form name="signUpForm" ng-submit="ac.signup()">
+          <md-input-container class="md-block">
+            <label>email: </label>
+            <input type="text" placeholder="email" required md-no-asterisk name="email" ng-model="ac.username">
+            <div ng-messages="signUpForm.email.$error" role="alert">
+              <div ng-message="required">This is required.</div>
+            </div>
+            <label>Password: </label>
+            <input type="password" placeholder="password" required md-no-asterisk name="password" ng-model="ac.password">
+            <div ng-messages="signUpForm.password.$error" role="alert">
+              <div ng-message="required">This is required.</div>
+            </div>
+
+          </md-input-container>
+          <md-card-actions layout="row" layout-align="end center">
+            <md-button type="submit" ng-disabled="signUpForm.$invalid" class="md-raised md-primary">SIGN UP</md-button>
+            <md-button type="button" class="md-raised md-accent" ng-click="ac.resetSignUpForm()">CANCEL</md-button>
+          </md-card-actions>
+        </form>
+      </md-card-content>
+    </md-card>
+  </div>
+</md-content>
