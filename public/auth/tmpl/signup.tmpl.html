@@ -14,12 +14,13 @@
             <div ng-messages="signUpForm.email.$error" role="alert">
               <div ng-message="required">This is required.</div>
             </div>
+		  </md-input-container>
+		  <md-input-container class="md-block">
             <label>Password: </label>
             <input type="password" placeholder="password" required md-no-asterisk name="password" ng-model="ac.password">
             <div ng-messages="signUpForm.password.$error" role="alert">
               <div ng-message="required">This is required.</div>
             </div>
-
           </md-input-container>
           <md-card-actions layout="row" layout-align="end center">
             <md-button type="submit" ng-disabled="signUpForm.$invalid" class="md-raised md-primary">SIGN UP</md-button>

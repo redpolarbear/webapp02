@@ -5,15 +5,15 @@
 (function () {
   'use strict';
   angular.module('menuMod').controller('MenuController', [
-         'MenuService', '$mdSidenav', '$timeout', '$log', MenuController
+         'menuService', '$mdSidenav', '$timeout', '$log', MenuController
          ]);
   /* @ngInject */
-  function MenuController(MenuService, $mdSidenav, $timeout, $log) {
+  function MenuController(menuService, $mdSidenav, $timeout, $log) {
     var self = this;
     self.menus = [];
     self.toggleList = toggleList;
     //Load all the menus
-    MenuService.loadAllMenus().then(function (menus) {
+    menuService.loadAllMenus().then(function (menus) {
       self.menus = [].concat(menus);
     });
 

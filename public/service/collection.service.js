@@ -1,22 +1,20 @@
 'use strict';
+(function () {
+	angular.module('collectionMod').factory('collectionService', collectionService);
+	collectionService.$inject = ['$http'];
 
-angular
-    .module('collectionMod')
-    .factory('collectionService', collectionService);
+	function collectionService($http) {
+		return {
+			getUserCollection: getUserCollection
+			, saveToCollection: saveToCollection
+		};
 
-collectionService.$inject = ['$http'];
+		function getUserCollection(creator) {
+			return $http.get('/api/collection/' + creator);
+		};
 
-function collectionService($http) {
-    return {
-        getUserCollection: getUserCollection,
-        saveToCollection: saveToCollection
-    };
-
-    function getUserCollection(creator) {
-      return $http.get('/api/collection/' + creator);
-    };
-
-    function saveToCollection(newScrapedItem) {
-      return $http.post('/api/collection/action/save', newScrapedItem);
-    };
-}
+		function saveToCollection(newScrapedItem) {
+			return $http.post('/api/collection/action/save', newScrapedItem);
+		};
+	}
+})();

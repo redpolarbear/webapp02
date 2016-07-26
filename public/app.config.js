@@ -10,9 +10,17 @@ angular.
 //          controller: 'DiscountNewsController'
 //        })
         .when('/', { //->'/scraping'
-          templateUrl: 'scraping/tmpl/scraping.tmpl.html',
-          controller: 'ScrapingController'
+          templateUrl: 'auth/tmpl/login.tmpl.html',
+          controller: 'AuthenticationController'
         })
+	  	.when('/signup', { //->'/scraping'
+          templateUrl: 'auth/tmpl/signup.tmpl.html',
+          controller: 'AuthenticationController'
+        })
+	  	.when('/scraping', {
+		  templateUrl: 'scraping/tmpl/scraping.tmpl.html',
+		  controller: 'ScrapingController'
+	  	})
         .when('/collection/:creator', {
           templateUrl: 'collection/tmpl/collection.tmpl.html',
           controller: 'CollectionController'
@@ -27,10 +35,6 @@ angular.
         })
         .when('/account', {
           templateUrl: 'account/tmpl/account.tmpl.html',
-          controller: 'AccountController'
-        })
-        .when('/signup', {
-          templateUrl: 'account/tmpl/signup.tmpl.html',
           controller: 'AccountController'
         })
         .when('/login', {
@@ -59,3 +63,17 @@ angular.
 //        .accentPalette('red');
     }
   ]);
+
+angular.
+module('shopApp').run(function ($rootScope, authService, $location) {
+	// register listener to watch route changes
+	$rootScope.$on('$routeChangeStart', function (event, next, current) {
+		if (!authService.isAuthenticated()) {
+//			console.log(next);
+			if (next.$$route.templateUrl !== 'auth/tmpl/login.tmpl.html' && next.$$route.templateUrl !== 'auth/tmpl/signup.tmpl.html') {
+				event.preventDefault();
+				$location.path("/");
+			};
+		};
+	});
+});

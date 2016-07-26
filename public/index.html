@@ -26,7 +26,8 @@
     </md-button>
     <h1>shop.arthursfunkyclub</h1> </md-toolbar>
   <div flex layout="row">
-    <md-sidenav ng-click="ul.toggleList()" md-is-locked-open="$mdMedia('gt-sm')" md-component-id="left" class="md-whiteframe-z2">
+    <md-sidenav ng-click="ul.toggleList()" md-component-id="left" class="md-whiteframe-z2">
+<!--		md-is-locked-open="$mdMedia('gt-sm')"-->
       <md-list>
         <md-list-item>
           <md-button>
@@ -55,6 +56,10 @@
   <script src="app.module.js"></script>
   <script src="app.config.js"></script>
 
+  <script src="./auth/auth.module.js"></script>
+  <script src="./auth/auth.controller.js"></script>
+  <script src="./service/auth.service.js"></script>
+
   <script src="./dashboard/menu.module.js"></script>
   <script src="./service/menu.service.js"></script>
   <script src="./dashboard/menu.controller.js"></script>
@@ -65,8 +70,8 @@
   <script src="./service/scraping.service.js"></script>
   <script src="./service/urlvalidation.service.js"></script>
 
-  <script src="./service/weidiantoken.service.js"></script>
   <script src="./service/weidian.service.js"></script>
+  <script src="./service/weidiantoken.service.js"></script>
 
   <script src="./account/account.module.js"></script>
   <script src="./account/account.controller.js"></script>

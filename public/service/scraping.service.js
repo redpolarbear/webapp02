@@ -1,23 +1,20 @@
 'use strict';
+(function () {
+	angular.module('scrapingMod').factory('scrapingService', scrapingService);
+	scrapingService.$inject = ['$http'];
 
-angular
-    .module('scrapingMod')
-    .factory('scrapingService', scrapingService);
+	function scrapingService($http) {
+		return {
+			getScrapedDetail: getScrapedDetail
+			, saveScrapedDetail: saveScrapedDetail
+		};
 
-scrapingService.$inject = ['$http'];
+		function getScrapedDetail(link) {
+			return $http.post('/api/scrape', link);
+		};
 
-function scrapingService($http) {
-    return {
-        getScrapedDetail: getScrapedDetail,
-        saveScrapedDetail: saveScrapedDetail
-    };
-
-    function getScrapedDetail(link) {
-        return $http.post('/api/scrape', link);
-    };
-
-    function saveScrapedDetail(item) {
-      return $http.post('/api/save', item);
-    }
-
-};
+		function saveScrapedDetail(item) {
+			return $http.post('/api/save', item);
+		}
+	};
+})();

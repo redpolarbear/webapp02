@@ -9,5 +9,6 @@ angular.module('shopApp', [
     'accountMod',
     'collectionMod',
     'promoMod',
-    'orderMod'
+    'orderMod',
+	'authenticationMod'
 ]);
