@@ -5,11 +5,13 @@
 (function () {
   'use strict';
   angular.module('menuMod').controller('MenuController', [
-         'menuService', '$mdSidenav', '$timeout', 'authService', '$location', '$log', MenuController
+         'menuService', '$mdSidenav', '$timeout', 'authService', '$location', 'jwtHelper', '$log', MenuController
          ]);
   /* @ngInject */
-  function MenuController(menuService, $mdSidenav, $timeout, authService, $location, $log) {
+  function MenuController(menuService, $mdSidenav, $timeout, authService, $location, jwtHelper, $log) {
     var self = this;
+    var LOCAL_TOKEN_KEY = 'yourTokenKey';
+
     self.menus = [];
     self.toggleList = toggleList;
     self.logout = logout;
@@ -18,6 +20,10 @@
       self.menus = [].concat(menus);
     });
 
+    self.isLoggedin = authService.isAuthenticated();
+    self.userProfile = getUserInfo();
+
+
     function toggleList() {
       $mdSidenav('left').toggle();
     };
@@ -25,7 +31,17 @@
     function logout() {
       authService.logout();
       $location.path('/login');
-
     };
+
+    console.log(authService.isAuthenticated());
+
+    function getUserInfo() {
+      var jwt_token = localStorage.getItem(LOCAL_TOKEN_KEY);
+      if (jwt_token) {
+        var tokenPayload = jwtHelper.decodeToken(jwt_token.split(' ').slice(1)[0]);
+        return tokenPayload;
+      };
+    };
+
   };
 })();

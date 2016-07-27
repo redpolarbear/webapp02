@@ -3,5 +3,6 @@
   angular.module('menuMod', [
     'ngMaterial'
     , 'ngMessages'
+    , 'angular-jwt'
   ]);
 })();

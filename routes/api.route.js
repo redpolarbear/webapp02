@@ -12,7 +12,7 @@ var express = require('express');
 
 var router = express.Router();
 
-router.post('/scrape', auth.isLoggedin(), scrapingController.scrapeItem);
+router.post('/scrape', scrapingController.scrapeItem);
 router.post('/save', scrapingController.saveItem);
 router.post('/urlvalidation', scrapingController.verifyUrl);
 

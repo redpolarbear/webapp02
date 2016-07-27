@@ -18,9 +18,8 @@
         email: self.email,
         password: self.password
       };
-      authService.login(user).then(function(username) {
-        console.log(username);
-        $location.path('/').search({username: username});
+      authService.login(user).then(function(msg) {
+        $location.path('/');
       }, function(errMsg) {
         console.log(errMsg);
       });

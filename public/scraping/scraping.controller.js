@@ -2,7 +2,7 @@
   'use strict';
   angular.module('scrapingMod').controller('ScrapingController', ['$mdDialog', 'scrapingService', 'urlValidationService', '$sce', 'weidianTokenService', 'collectionService', 'orderService', 'weidianService', ScrapingController]);
 
-  function ScrapingController($mdDialog, scrapingService, urlValidationService, $sce, weidianTokenService, collectionService, orderService, weidianService, jwtHelper, $log) {
+  function ScrapingController($mdDialog, scrapingService, urlValidationService, $sce, weidianTokenService, collectionService, orderService, weidianService, $log) {
     var self = this;
     var scrapeConfirm = $mdDialog.confirm()
                           .title('ARE YOU SURE?')
@@ -58,8 +58,10 @@
     self.resetLinkInputForm = resetLinkInputForm;
     self.checkOut = checkOut;
 
-    function getScrapedItem() {
 
+    console.log(localStorage.getItem('yourTokenKey'));
+
+    function getScrapedItem() {
       $mdDialog.show(scrapeConfirm).then(function () {
         var link = {
           url: self.url

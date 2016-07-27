@@ -73,6 +73,8 @@ module('shopApp').run(function ($rootScope, authService, $location) {
 				event.preventDefault();
 				$location.path("/login");
 			};
-		};
+		} else {
+         $location.path("/");
+        };
 	});
 });

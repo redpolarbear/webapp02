@@ -21,20 +21,26 @@
 </head>
 
 <body id="dashboard" ng-app="shopApp" layout="column" ng-controller="MenuController as ul" ng-cloak>
-  <md-toolbar layout="row">
-    <md-button class="menu" ng-click="ul.toggleList()" aria-label="Show Menu List">
+  <md-toolbar layout="row" layout-align="center center">
+<!--
+    <md-button ng-show="ul.isLoggedin" class="menu" ng-click="ul.toggleList()" aria-label="Show Menu List">
       <md-icon md-svg-icon="menu"></md-icon>
     </md-button>
-    <h1>shop.arthursfunkyclub</h1> <span flex></span>
-    <md-button class="md-raised" aria-label="Learn More" ng-click="ul.logout()">Logout</md-button>
+-->
+    <h1>shop.arthursfunkyclub</h1>
+<!--    <md-button class="md-raised" aria-label="Logout" ng-click="ul.logout()">Logout</md-button>-->
   </md-toolbar>
   <div flex layout="row">
-    <md-sidenav ng-click="ul.toggleList()" md-component-id="left" class="md-whiteframe-z2">
+    <md-sidenav md-is-locked-open="ul.isLoggedin" ng-if="ul.isLoggedin" ng-click="ul.toggleList()" md-component-id="left" class="md-whiteframe-z2">
       <!--		md-is-locked-open="$mdMedia('gt-sm')"-->
       <md-list>
         <md-list-item>
           <md-button>
-            <md-icon md-svg-icon="avatar" class="avatar"></md-icon> {{ ul.user.username }} </md-button>
+            <md-icon md-svg-icon="avatar" class="avatar"></md-icon>
+            <p>{{ ul.userProfile.username }}</p>
+            <p>logout</p>
+          </md-button>
+
         </md-list-item>
       </md-list>
       <md-list>
