@@ -15,37 +15,43 @@
 				name: 'I WANNA BUY~BUY~BUY~'
 				, icon: 'shopping_basket'
 				, description: 'ADVANTURE ALL OVER THE WORLD'
-				, href: '/scraping'
+                , level: 100
+				, href: '/'
       }
       , {
 				name: 'My Collections'
 				, icon: 'my_collections'
 				, description: 'SECRET BASE FOR ADVANTURE'
-				, href: '/collection/matthewxu'
+                , level: 100
+				, href: '/collection/'
       }
       , {
 				name: 'My Promos'
 				, icon: 'my_promos'
 				, description: 'SECRET FATAL WEAPON'
-				, href: '/promo'
+                , level: 100
+				, href: '/promo/'
       }
       , {
 				name: 'My Orders'
 				, icon: 'my_orders'
 				, description: 'TROPHIES OF ADVANTURE'
-				, href: '/order'
+                , level: 100
+				, href: '/order/'
       }
       , {
 				name: 'My Account'
 				, icon: 'my_account'
 				, description: 'INSCRIBE NAME UPON ADVANTURE'
-				, href: '/account'
+                , level: 100
+				, href: '/account/'
       }
       , {
 				name: 'Admin Area'
 				, icon: 'admin_area'
 				, description: 'MASTER OF ADVANTURE'
-				, href: '/admin'
+                , level: 999
+				, href: '/admin/'
       }
     ];
 		// Promise-based API

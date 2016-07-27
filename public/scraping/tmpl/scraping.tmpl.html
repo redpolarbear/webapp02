@@ -1,110 +1,98 @@
-<md-content flex id="content" layout="column" class="md-padding" ng-controller="ScrapingController as sc">
-  <md-button aria-label="menu" class="hiding-fab md-fab md-mini md-warn md-scale md-fab-top-right" ng-click="sc.formShowing=!sc.formShowing" ng-if="sc.hidingArrowShowing">
-    <md-icon md-svg-icon="up_arrow" aria-label="open input form" ng-if="sc.formShowing"></md-icon>
-    <md-icon md-svg-icon="down_arrow" aria-label="close input form" ng-if="!sc.formShowing"></md-icon>
-  </md-button>
-  <div flex layout="column" ng-cloak ng-if="sc.formShowing">
-    <md-card>
-      <md-card-title>
-        <md-card-title-text> <span class="md-headline">The Door to the Whole New World!</span> </md-card-title-text>
-      </md-card-title>
-      <md-card-content>
-        <form name="linkInputForm" ng-submit="sc.getScrapedItem()">
-          <md-input-container class="md-block">
-            <label>Do you find the key?</label>
-            <input placeholder="Show me your key..." required md-no-asterisk name="key" ng-model="sc.url" ng-disabled="sc.disableLinkInput">
-            <div ng-messages="linkInputForm.key.$error" role="alert">
-              <div ng-message="required">This is required.</div>
-            </div>
-          </md-input-container>
-        <md-card-actions layout="row" layout-align="end center">
-          <md-button type="submit" ng-disabled="linkInputForm.$invalid?linkInputForm.$invalid:sc.disableLinkInput" class="md-raised md-primary">MAMI~MAMI~HONG~~</md-button>
-          <md-button type="button" class="md-raised md-accent" ng-click="sc.resetLinkInputForm()">A~MI~TOFO~~</md-button>
-        </md-card-actions>
-        </form>
-      </md-card-content>
-    </md-card>
-  </div>
-  <div flex-xs flex-gt-xs="50" layout="column" ng-cloak ng-if="sc.detailShowing">
-    <md-card>
-      <md-card-header>
-        <md-card-avatar>
-          <img class="md-user-avatar" ng-src="{{ sc.brandIconUrl }}">
-        </md-card-avatar>
-        <md-card-header-text>
-          <span class="md-title">Source: {{ sc.source }}</span>
-          <span class="md-subhead">From: <a href="{{ sc.item.url }}">{{ sc.item.title }}</a></span>
-        </md-card-header-text>
-      </md-card-header>
-      <img class="main-image" align="middle" ng-src="{{sc.mainImageUrl}}" class="md-card-image" alt="Image">
-      <div layout="row" layout-align="center">
-        <ul style="-webkit-padding-start: 0;">
-          <li class="prod-thumb" ng-repeat="imageUrl in sc.imageUrls"> <img ng-src="{{ imageUrl }}" ng-click="sc.setImage(imageUrl)"> </li>
-        </ul>
+  <md-content flex id="content" layout="column" class="md-padding" ng-controller="ScrapingController as sc">
+    <md-button aria-label="menu" class="hiding-fab md-fab md-mini md-warn md-scale md-fab-top-right" ng-click="sc.formShowing=!sc.formShowing" ng-if="sc.hidingArrowShowing">
+      <md-icon md-svg-icon="up_arrow" aria-label="open input form" ng-if="sc.formShowing"></md-icon>
+      <md-icon md-svg-icon="down_arrow" aria-label="close input form" ng-if="!sc.formShowing"></md-icon>
+    </md-button>
+    <div flex layout="column" ng-cloak ng-if="sc.formShowing">
+      <md-card>
+        <md-card-title>
+          <md-card-title-text> <span class="md-headline">The Door to the Whole New World!</span> </md-card-title-text>
+        </md-card-title>
+        <md-card-content>
+          <form name="linkInputForm" ng-submit="sc.getScrapedItem()">
+            <md-input-container class="md-block">
+              <label>Do you find the key?</label>
+              <input placeholder="Show me your key..." required md-no-asterisk name="key" ng-model="sc.url" ng-disabled="sc.disableLinkInput">
+              <div ng-messages="linkInputForm.key.$error" role="alert">
+                <div ng-message="required">This is required.</div>
+              </div>
+            </md-input-container>
+            <md-card-actions layout="row" layout-align="end center">
+              <md-button type="submit" ng-disabled="linkInputForm.$invalid?linkInputForm.$invalid:sc.disableLinkInput" class="md-raised md-primary">MAMI~MAMI~HONG~~</md-button>
+              <md-button type="button" class="md-raised md-accent" ng-click="sc.resetLinkInputForm()">A~MI~TOFO~~</md-button>
+            </md-card-actions>
+          </form>
+        </md-card-content>
+      </md-card>
+    </div>
+    <div flex-xs flex-gt-xs="50" layout="column" ng-cloak ng-if="sc.detailShowing">
+      <md-card>
+        <md-card-header>
+          <md-card-avatar> <img class="md-user-avatar" ng-src="{{ sc.brandIconUrl }}"> </md-card-avatar>
+          <md-card-header-text> <span class="md-title">Source: {{ sc.source }}</span> <span class="md-subhead">From: <a href="{{ sc.item.url }}">{{ sc.item.title }}</a></span> </md-card-header-text>
+        </md-card-header> <img class="main-image" align="middle" ng-src="{{sc.mainImageUrl}}" class="md-card-image" alt="Image">
+        <div layout="row" layout-align="center">
+          <ul style="-webkit-padding-start: 0;">
+            <li class="prod-thumb" ng-repeat="imageUrl in sc.imageUrls"> <img ng-src="{{ imageUrl }}" ng-click="sc.setImage(imageUrl)"> </li>
+          </ul>
+        </div>
+        <!--   Item Title, Description and Price   -->
+        <md-card-title>
+          <md-card-title-text> <span class="md-headline" align="center">{{ sc.item.title }}</span> <span class="md-subhead" align="center">{{ sc.item.description }}</span>
+            <!-- get the price from the sku --><span class="md-subhead" align="center">{{ sc.original_price }}</span> <span class="md-subhead" align="center">{{ sc.sales_price }}</span> </md-card-title-text>
+        </md-card-title>
+        <!--   Item Color, Sizes and Quantity   -->
+        <md-card-content>
+          <div layout="row" layout-xs="column">
+            <md-input-container class="md-block" flex>
+              <label>Color</label>
+              <md-select ng-model="sc.color" placeholder="Color" ng-change="sc.colorOnChange(sc.color)">
+                <md-option ng-repeat="(index, color) in sc.colors" ng-value="color" ng-selected="index==0?true:false">{{ color }}</md-option>
+              </md-select>
+            </md-input-container>
+            <md-input-container class="md-block" flex>
+              <label>Size</label>
+              <md-select ng-model="sc.size" placeholder="size">
+                <md-option ng-repeat="(index, size) in sc.sizes" ng-value="size" ng-selected="index==0?true:false">{{ size }}</md-option>
+              </md-select>
+            </md-input-container>
+            <md-input-container class="md-block" flex>
+              <label>Quantity</label>
+              <md-select ng-model="sc.quantity">
+                <md-option ng-repeat="(index, quantity) in sc.quantities" ng-value="quantity" ng-selected="index==0?true:false">{{ quantity }} </md-option>
+              </md-select>
+            </md-input-container>
+          </div>
+          <!--   Item Action "Save to the Collections" and "Save to Weidian(buy)"    -->
+          <div layout="row" flex-gt-sm layout-align="center">
+            <md-card-actions>
+              <md-button class="md-raised md-primary" ng-click="sc.addToMyCollections()">Add to My Collections</md-button>
+              <md-button class="md-raised md-accent" ng-click="sc.checkOut()">Check-out</md-button>
+            </md-card-actions>
+          </div>
+          <div ng-cloak class="detail-tabs">
+            <md-content>
+              <md-tabs md-dynamic-height="" md-border-bottom="">
+                <md-tab label="Description Details">
+                  <md-content class="md-padding">
+                    <!--                  <h1 class="md-display-2">Tab One</h1>-->
+                    <div ng-bind-html="sc.finalDescriptionDetails"></div>
+                  </md-content>
+                </md-tab>
+              </md-tabs>
+            </md-content>
+          </div>
+        </md-card-content>
+      </md-card>
+    </div>
+    <div style="visibility: hidden">
+      <div class="md-dialog-container" id="wipDialog">
+        <md-dialog layout-padding>
+          <h2>Pushing the door hard......</h2>
+          <div layout="row" layout-sm="column" layout-align="space-around">
+            <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+          </div>
+        </md-dialog>
       </div>
-      <!--   Item Title, Description and Price   -->
-      <md-card-title>
-        <md-card-title-text>
-          <span class="md-headline" align="center">{{ sc.item.title }}</span>
-          <span class="md-subhead" align="center">{{ sc.item.description }}</span>
-          <!-- get the price from the sku -->
-          <span class="md-subhead" align="center">{{ sc.original_price }}</span> 
-          <span class="md-subhead" align="center">{{ sc.sales_price }}</span>
-        </md-card-title-text>
-      </md-card-title>
-      <!--   Item Color, Sizes and Quantity   -->
-      <md-card-content>
-        <div layout="row" layout-xs="column">
-          <md-input-container class="md-block" flex>
-            <label>Color</label>
-            <md-select ng-model="sc.color" placeholder="Color" ng-change="sc.colorOnChange(sc.color)">
-              <md-option ng-repeat="(index, color) in sc.colors" ng-value="color" ng-selected="index==0?true:false">{{ color }}</md-option>
-            </md-select>
-          </md-input-container>
-          <md-input-container class="md-block" flex>
-            <label>Size</label>
-            <md-select ng-model="sc.size" placeholder="size">
-              <md-option ng-repeat="(index, size) in sc.sizes" ng-value="size" ng-selected="index==0?true:false">{{ size }}</md-option>
-            </md-select>
-          </md-input-container>
-          <md-input-container class="md-block" flex>
-            <label>Quantity</label>
-            <md-select ng-model="sc.quantity">
-              <md-option ng-repeat="(index, quantity) in sc.quantities" ng-value="quantity" ng-selected="index==0?true:false">{{ quantity }} </md-option>
-            </md-select>
-          </md-input-container>
-        </div>
-        <!--   Item Action "Save to the Collections" and "Save to Weidian(buy)"    -->
-        <div layout="row" flex-gt-sm layout-align="center">
-          <md-card-actions>
-            <md-button class="md-raised md-primary" ng-click="sc.addToMyCollections()">Add to My Collections</md-button>
-            <md-button class="md-raised md-accent" ng-click="sc.checkOut()">Check-out</md-button>
-          </md-card-actions>
-        </div>
-        <div ng-cloak class="detail-tabs">
-          <md-content>
-            <md-tabs md-dynamic-height="" md-border-bottom="">
-              <md-tab label="Description Details">
-                <md-content class="md-padding">
-<!--                  <h1 class="md-display-2">Tab One</h1>-->
-                  <div ng-bind-html="sc.finalDescriptionDetails"></div>
-                </md-content>
-              </md-tab>
-            </md-tabs>
-          </md-content>
-        </div>
-      </md-card-content>
-    </md-card>
-  </div>
-
-<div style="visibility: hidden">
-  <div class="md-dialog-container" id="wipDialog">
-    <md-dialog layout-padding>
-      <h2>Pushing the door hard......</h2>
-      <div layout="row" layout-sm="column" layout-align="space-around">
-        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
-      </div>
-    </md-dialog>
-  </div>
-</div>
-</md-content>
+    </div>
+  </md-content>

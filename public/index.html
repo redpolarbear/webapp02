@@ -6,7 +6,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="description" content="">
-  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
   <base href="/">
   <link rel="stylesheet" href="./lib/angular-material/angular-material.css" />
   <link rel="stylesheet" href="./lib/bootstrap/dist/css/bootstrap.min.css" />
@@ -22,25 +22,20 @@
 
 <body id="dashboard" ng-app="shopApp" layout="column" ng-controller="MenuController as ul" ng-cloak>
   <md-toolbar layout="row" layout-align="center center">
-<!--
-    <md-button ng-show="ul.isLoggedin" class="menu" ng-click="ul.toggleList()" aria-label="Show Menu List">
+    <md-button hide-gt-sm ng-if="ul.isLoggedin" class="menu" ng-click="ul.toggleList()" aria-label="Show Menu List">
       <md-icon md-svg-icon="menu"></md-icon>
     </md-button>
--->
     <h1>shop.arthursfunkyclub</h1>
-<!--    <md-button class="md-raised" aria-label="Logout" ng-click="ul.logout()">Logout</md-button>-->
   </md-toolbar>
   <div flex layout="row">
-    <md-sidenav md-is-locked-open="ul.isLoggedin" ng-if="ul.isLoggedin" ng-click="ul.toggleList()" md-component-id="left" class="md-whiteframe-z2">
-      <!--		md-is-locked-open="$mdMedia('gt-sm')"-->
+    <md-sidenav md-is-locked-open="$mdMedia('gt-sm')" ng-if="ul.isLoggedin" md-component-id="left" class="md-whiteframe-z2">
       <md-list>
-        <md-list-item>
-          <md-button>
-            <md-icon md-svg-icon="avatar" class="avatar"></md-icon>
-            <p>{{ ul.userProfile.username }}</p>
-            <p>logout</p>
-          </md-button>
-
+        <md-list-item class="md-2-line">
+            <md-icon md-svg-icon="avatar" class="avatar" style="width: 128px"></md-icon>
+            <div class="md-list-item-text">
+              <h3>Welcome! {{ ul.userProfile.username }}</h3>
+              <p><a href="#" ng-click="ul.logout()">Logout</a></p>
+            </div>
         </md-list-item>
       </md-list>
       <md-list>

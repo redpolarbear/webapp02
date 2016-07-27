@@ -20,6 +20,7 @@
       };
       authService.login(user).then(function(msg) {
         $location.path('/');
+        location.reload();
       }, function(errMsg) {
         console.log(errMsg);
       });

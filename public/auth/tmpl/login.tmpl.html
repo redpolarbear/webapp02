@@ -4,7 +4,7 @@
 			<h4 class="modal-title" id="myModalLabel">Login to shop.arthusfunkyclub.com</h4> </div>
 		<div class="modal-body">
 			<div class="row">
-				<div class="col-xs-6">
+				<div class="col-sm-12 col-md-6">
 					<div class="well">
 						<form id="loginForm" method="POST" ng-submit="ac.login()">
 							<div class="form-group">
@@ -17,14 +17,13 @@
 							</div>
 							<div class="checkbox">
 								<label><input type="checkbox" name="remember" id="remember"> Remember login </label>
-								<p class="help-block">(if this is a private computer)</p>
 							</div>
 							<button type="submit" class="btn btn-success btn-block">Login</button>
 							<a href="#" class="btn btn-default btn-block">Forgot your password?</a>
 						</form>
 					</div>
 				</div>
-				<div class="col-xs-6">
+				<div class="col-md-6" hide-sm hide-xs>
 					<p class="lead">Register now for <span class="text-success">FREE</span></p>
 					<ul class="list-unstyled" style="line-height: 2">
 						<li><span class="fa fa-check text-success"></span> See all your orders</li>
@@ -40,34 +39,3 @@
 		</div>
 	</div>
 </div>
-<!--
-	<md-content id="content" layout="column" class="md-padding" ng-controller="AuthenticationController as ac">
-		<div layout="column" ng-cloak>
-			<md-card>
-				<md-card-title>
-					<md-card-title-text> <span class="md-headline">Login</span> </md-card-title-text>
-				</md-card-title>
-				<md-card-content>
-					<form name="loginForm" ng-submit="ac.login()">
-						<md-input-container class="md-block">
-							<input type="email" placeholder="Email" required md-no-asterisk name="email" ng-model="ac.login.email" minlength="10" maxlength="100" ng-pattern="/^.+@.+\..+$/">
-							<div ng-messages="loginForm.email.$error" role="alert">
-								<div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']"> Your email must be between 10 and 100 characters long and look like an e-mail address. </div>
-							</div>
-						</md-input-container>
-						<md-input-container class="md-block">
-							<input type="password" placeholder="Password" required md-no-asterisk name="password" ng-model="ac.login.password">
-							<div ng-messages="loginForm.password.$error" role="alert">
-								<div ng-message="required">This is required.</div>
-							</div>
-						</md-input-container>
-						<md-card-actions layout="row" layout-align="end center">
-							<md-button type="submit" ng-disabled="loginForm.$invalid" class="md-raised md-primary">LOGIN</md-button>
-							<md-button type="button" class="md-raised md-accent" ng-click="ac.resetSignUpForm()">CANCEL</md-button>
-						</md-card-actions>
-					</form>
-				</md-card-content>
-			</md-card>
-		</div>
-	</md-content>
--->

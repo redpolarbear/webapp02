@@ -9,9 +9,12 @@ var morgan   = require('morgan');
 var http     = require('http');
 var path     = require('path');
 var mongoose = require('mongoose');
-var passport = require('passport');
-var flash    = require('connect-flash');
-var session      = require('express-session');
+//var expressJWT = require('express-jwt');
+var config = require('./config/index');
+
+//var passport = require('passport');
+//var flash    = require('connect-flash');
+//var session      = require('express-session');
 
 
 var routes   = require('./routes/index.route');
@@ -30,6 +33,7 @@ app.set('port', process.env.PORT || 9000);
 app.set('views', __dirname + '/views');
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
+
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({
   extended: true
@@ -39,14 +43,15 @@ app.use(methodOverride());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // required for passport
-app.use(session({ secret: 'ilovesarthursfunkyclub' })); // session secret
-app.use(passport.initialize());
-app.use(passport.session()); // persistent login sessions
-app.use(flash());
+//app.use(session({ secret: 'ilovesarthursfunkyclub' })); // session secret
+//app.use(passport.initialize());
+//app.use(passport.session()); // persistent login sessions
+//app.use(flash());
 
-require('./config/passport')(passport); // pass passport for configuration
+//require('./config/passport')(passport); // pass passport for configuration
 
 //require('./routes/routes')(app, passport);
+
 
 app.use('/api', api);
 app.use('/auth', auth);

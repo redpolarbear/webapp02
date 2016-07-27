@@ -10,7 +10,7 @@
   /* @ngInject */
   function MenuController(menuService, $mdSidenav, $timeout, authService, $location, jwtHelper, $log) {
     var self = this;
-    var LOCAL_TOKEN_KEY = 'yourTokenKey';
+//    var LOCAL_TOKEN_KEY = 'yourTokenKey';
 
     self.menus = [];
     self.toggleList = toggleList;
@@ -21,27 +21,29 @@
     });
 
     self.isLoggedin = authService.isAuthenticated();
-    self.userProfile = getUserInfo();
-
-
+    console.log(self.isLoggedin);
+    self.userProfile = authService.getUserCredentials();
+//    authService.getUserCredentials().then(function(userProfile) {
+//      self.userProfile = userProfile;
+//      console.log(userProfile);
+//    });
+//
     function toggleList() {
       $mdSidenav('left').toggle();
     };
 
     function logout() {
       authService.logout();
-      $location.path('/login');
+      location.reload();
     };
 
-    console.log(authService.isAuthenticated());
-
-    function getUserInfo() {
-      var jwt_token = localStorage.getItem(LOCAL_TOKEN_KEY);
-      if (jwt_token) {
-        var tokenPayload = jwtHelper.decodeToken(jwt_token.split(' ').slice(1)[0]);
-        return tokenPayload;
-      };
-    };
+//    function getUserInfo() {
+//      var jwt_token = localStorage.getItem(LOCAL_TOKEN_KEY);
+//      if (jwt_token) {
+//        var tokenPayload = jwtHelper.decodeToken(jwt_token.split(' ').slice(1)[0]);
+//        return tokenPayload;
+//      };
+//    };
 
   };
 })();

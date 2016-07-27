@@ -2,7 +2,7 @@
 (function () {
  angular.module('authenticationMod').constant('AUTH_EVENTS', {
     notAuthenticated: 'auth-not-authenticated'
-  }).service('authService', function ($q, $http) {
+  }).service('authService', function ($q, jwtHelper, $http) {
     var LOCAL_TOKEN_KEY = 'yourTokenKey';
     var isAuthenticated = false;
     var authToken;
@@ -37,7 +37,7 @@
       return $q(function (resolve, reject) {
         $http.post('/auth/signup', user).then(function (result) {
           if (result.data.success) {
-            resolve(result.data);
+            resolve(result.data.msg);
           }
           else {
             reject(result.data.msg);
@@ -45,6 +45,7 @@
         });
       });
     };
+
     var login = function (user) {
       return $q(function (resolve, reject) {
         $http.post('/auth/login', user).then(function (result) {
@@ -58,12 +59,20 @@
         });
       });
     };
+
     var logout = function () {
       destroyUserCredentials();
     };
+
     loadUserCredentials();
+
     return {
-      login: login
+      getUserCredentials: function() {
+        if (authToken) {
+          return jwtHelper.decodeToken(authToken.split(' ').slice(1)[0]);
+        }
+      }
+      , login: login
       , register: register
       , logout: logout
       , isAuthenticated: function () {

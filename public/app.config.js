@@ -41,7 +41,7 @@ angular.
           templateUrl: 'auth/tmpl/login.tmpl.html',
           controller: 'AuthenticationController'
         })
-        .otherwise({redirectTo: '/login'});
+        .otherwise({redirectTo: '/'});
 
       $locationProvider.html5Mode(true);
 
@@ -71,10 +71,13 @@ module('shopApp').run(function ($rootScope, authService, $location) {
 		if (!authService.isAuthenticated()) {
 			if (next.$$route.templateUrl !== 'auth/tmpl/login.tmpl.html' && next.$$route.templateUrl !== 'auth/tmpl/signup.tmpl.html') {
 				event.preventDefault();
-				$location.path("/login");
+				$location.path('/login');
 			};
 		} else {
-         $location.path("/");
+//          if (next.$$route.templateUrl == 'auth/tmpl/login.tmpl.html' && next.$$route.templateUrl == 'auth/tmpl/signup.tmpl.html') {
+//				event.preventDefault();
+//				$location.path('/');
+//			};
         };
 	});
 });

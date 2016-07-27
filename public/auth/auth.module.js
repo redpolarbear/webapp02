@@ -1,6 +1,7 @@
 (function () {
   'use strict';
   angular.module('authenticationMod', [
-    'ngMaterial'
+    'ngMaterial',
+    'angular-jwt'
   ]);
 })();

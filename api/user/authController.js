@@ -1,5 +1,4 @@
 'use strict';
-var passport = require('passport');
 var User = require('./model/user.model');
 var config = require('../../config/index');
 var jwt = require('jwt-simple');
@@ -67,7 +66,4 @@ exports.login = function (req, res) {
     }
   });
 };
-exports.membership = function (req, res) {
-  console.log(req);
-  res.send(req.user);
-};
+
