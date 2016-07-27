@@ -14,8 +14,9 @@ var flash    = require('connect-flash');
 var session      = require('express-session');
 
 
-var routes   = require('./routes/index');
-var api      = require('./routes/apis');
+var routes   = require('./routes/index.route');
+var api      = require('./routes/api.route');
+var auth = require('./routes/auth.route');
 
 var app = module.exports = express();
 
@@ -48,6 +49,7 @@ require('./config/passport')(passport); // pass passport for configuration
 //require('./routes/routes')(app, passport);
 
 app.use('/api', api);
+app.use('/auth', auth);
 app.use('/', routes);
 
 app.route('/*').get(function (req, res) {

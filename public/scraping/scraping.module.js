@@ -2,6 +2,7 @@
   'use strict';
   angular.module('scrapingMod', [
     'ngMaterial',
-    'ngSanitize' //https://docs.angularjs.org/api/ngSanitize/service/$sanitize
+    'ngSanitize',
+    'angular-jwt'//https://docs.angularjs.org/api/ngSanitize/service/$sanitize
   ]);
 })();

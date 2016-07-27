@@ -18,20 +18,23 @@ exports.signup = function (req, res) {
 			, password: req.body.password
 		});
 		// save the user
-		newUser.save(function (err) {
+		newUser.save(function (err, newUser) {
 			if (err) {
 				return res.json({
 					success: false
 					, msg: 'Username already exists.'
 				});
-			}
+			};
+            var token = jwt.encode(newUser, config.secret);
 			res.json({
 				success: true
-				, msg: 'Successful created new user.'
+                , token: 'Bearer ' + token
+				, msg: 'Successfully created new user.'
 			});
 		});
 	}
 };
+
 exports.login = function (req, res) {
 	User.findOne({
 		email: req.body.email
@@ -52,7 +55,9 @@ exports.login = function (req, res) {
 					// return the information including token as JSON
 					res.json({
 						success: true
-						, token: 'JWT ' + token
+						, token: 'Bearer ' + token
+                        , msg: 'Successfully logged in.'
+                        , username: user.username
 					});
 				}
 				else {
@@ -64,4 +69,10 @@ exports.login = function (req, res) {
 			});
 		}
 	});
+};
+
+
+exports.membership = function (req, res) {
+  console.log(req);
+  res.send(req.user);
 };

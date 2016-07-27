@@ -6,12 +6,13 @@ var weidianController = require('../api/weidian/weidianController');
 var weidianTokenController = require('../api/weidian/weidianTokenController');
 var collectionController = require('../api/collection/collectionController');
 var orderController = require('../api/order/orderController');
+var auth = require('../auth/auth.middleware');
 
 var express = require('express');
 
 var router = express.Router();
 
-router.post('/scrape', scrapingController.scrapeItem);
+router.post('/scrape', auth.isLoggedin(), scrapingController.scrapeItem);
 router.post('/save', scrapingController.saveItem);
 router.post('/urlvalidation', scrapingController.verifyUrl);
 

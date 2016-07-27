@@ -1,3 +1,36 @@
+<div id="signup-overlay" ng-cloak class="modal-dialog" ng-controller="AuthenticationController as ac">
+	<div class="modal-content">
+		<div class="modal-header">
+			<h4 class="modal-title" id="myModalLabel">Signup NOW!</h4> </div>
+		<div class="modal-body">
+			<div class="row">
+				<div class="col-md-12 col-xs-12 col-sm-12">
+					<div class="well">
+						<form name="signupForm" id="signupForm" method="POST" ng-submit="ac.signup()">
+							<div class="form-group">
+								<input class="form-control" name="username" placeholder="Your Name" type="text" ng-model="ac.username" />
+							</div>
+							<div class="form-group">
+								<input class="form-control" name="email" placeholder="Your Email" type="email" ng-model="ac.email" />
+							</div>
+							<div class="form-group">
+            					<input class="form-control" name="password" placeholder="Password" type="password" ng-model="ac.password"/>
+							</div>
+							<div class="form-group">
+            					<input class="form-control" name="reenterpassword" placeholder="Re-enter Password" type="password" />
+							</div>
+							<button type="submit" class="btn btn-primary btn-block btn-block">Sign up</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+<!--
 <md-content flex id="content" layout="column" class="md-padding" ng-controller="AccountController as ac">
   <div flex layout="column" ng-cloak>
     <md-card>
@@ -31,3 +64,4 @@
     </md-card>
   </div>
 </md-content>
+-->

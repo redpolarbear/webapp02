@@ -9,6 +9,7 @@
   <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
   <base href="/">
   <link rel="stylesheet" href="./lib/angular-material/angular-material.css" />
+  <link rel="stylesheet" href="./lib/bootstrap/dist/css/bootstrap.min.css" />
   <link rel="stylesheet" href="./stylesheets/style.css" />
   <style type="text/css">
     /*      Hide when Angular is not yet loaded and initialized*/
@@ -21,17 +22,19 @@
 
 <body id="dashboard" ng-app="shopApp" layout="column" ng-controller="MenuController as ul" ng-cloak>
   <md-toolbar layout="row">
-    <md-button class="menu" hide-gt-sm ng-click="ul.toggleList()" aria-label="Show Menu List">
+    <md-button class="menu" ng-click="ul.toggleList()" aria-label="Show Menu List">
       <md-icon md-svg-icon="menu"></md-icon>
     </md-button>
-    <h1>shop.arthursfunkyclub</h1> </md-toolbar>
+    <h1>shop.arthursfunkyclub</h1> <span flex></span>
+    <md-button class="md-raised" aria-label="Learn More" ng-click="ul.logout()">Logout</md-button>
+  </md-toolbar>
   <div flex layout="row">
     <md-sidenav ng-click="ul.toggleList()" md-component-id="left" class="md-whiteframe-z2">
-<!--		md-is-locked-open="$mdMedia('gt-sm')"-->
+      <!--		md-is-locked-open="$mdMedia('gt-sm')"-->
       <md-list>
         <md-list-item>
           <md-button>
-            <md-icon md-svg-icon="avatar" class="avatar"></md-icon> Matthew Xu </md-button>
+            <md-icon md-svg-icon="avatar" class="avatar"></md-icon> {{ ul.user.username }} </md-button>
         </md-list-item>
       </md-list>
       <md-list>
@@ -53,37 +56,30 @@
   <script src="./lib/angular-messages/angular-messages.js"></script>
   <script src="./lib/angular-sanitize/angular-sanitize.js"></script>
   <script type="text/javascript" src="./lib/angular-material/angular-material.js"></script>
+  <script type="text/javascript" src="./lib/angular-jwt/dist/angular-jwt.js"></script>
   <script src="app.module.js"></script>
   <script src="app.config.js"></script>
-
   <script src="./auth/auth.module.js"></script>
   <script src="./auth/auth.controller.js"></script>
   <script src="./service/auth.service.js"></script>
-
   <script src="./dashboard/menu.module.js"></script>
   <script src="./service/menu.service.js"></script>
   <script src="./dashboard/menu.controller.js"></script>
-
   <script src="./scraping/scraping.module.js"></script>
   <script src="./scraping/scraping.controller.js"></script>
   <script src="./scraping/scraping.config.js"></script>
   <script src="./service/scraping.service.js"></script>
   <script src="./service/urlvalidation.service.js"></script>
-
   <script src="./service/weidian.service.js"></script>
   <script src="./service/weidiantoken.service.js"></script>
-
   <script src="./account/account.module.js"></script>
   <script src="./account/account.controller.js"></script>
-
   <script src="./collection/collection.module.js"></script>
   <script src="./collection/collection.controller.js"></script>
   <script src="./service/collection.service.js"></script>
-
   <script src="./order/order.module.js"></script>
   <script src="./order/order.controller.js"></script>
   <script src="./service/order.service.js"></script>
-
   <script src="./promo/promo.module.js"></script>
   <script src="./promo/promo.controller.js"></script>
 </body>

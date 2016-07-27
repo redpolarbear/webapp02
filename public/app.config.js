@@ -10,17 +10,17 @@ angular.
 //          controller: 'DiscountNewsController'
 //        })
         .when('/', { //->'/scraping'
-          templateUrl: 'auth/tmpl/login.tmpl.html',
-          controller: 'AuthenticationController'
+		  templateUrl: 'scraping/tmpl/scraping.tmpl.html',
+		  controller: 'ScrapingController'
         })
 	  	.when('/signup', { //->'/scraping'
           templateUrl: 'auth/tmpl/signup.tmpl.html',
           controller: 'AuthenticationController'
         })
-	  	.when('/scraping', {
-		  templateUrl: 'scraping/tmpl/scraping.tmpl.html',
-		  controller: 'ScrapingController'
-	  	})
+//	  	.when('/scraping', {
+//		  templateUrl: 'scraping/tmpl/scraping.tmpl.html',
+//		  controller: 'ScrapingController'
+//	  	})
         .when('/collection/:creator', {
           templateUrl: 'collection/tmpl/collection.tmpl.html',
           controller: 'CollectionController'
@@ -38,10 +38,10 @@ angular.
           controller: 'AccountController'
         })
         .when('/login', {
-          templateUrl: 'account/tmpl/login.tmpl.html',
-          controller: 'AccountController'
+          templateUrl: 'auth/tmpl/login.tmpl.html',
+          controller: 'AuthenticationController'
         })
-        .otherwise({redirectTo: '/'});
+        .otherwise({redirectTo: '/login'});
 
       $locationProvider.html5Mode(true);
 
@@ -69,10 +69,9 @@ module('shopApp').run(function ($rootScope, authService, $location) {
 	// register listener to watch route changes
 	$rootScope.$on('$routeChangeStart', function (event, next, current) {
 		if (!authService.isAuthenticated()) {
-//			console.log(next);
 			if (next.$$route.templateUrl !== 'auth/tmpl/login.tmpl.html' && next.$$route.templateUrl !== 'auth/tmpl/signup.tmpl.html') {
 				event.preventDefault();
-				$location.path("/");
+				$location.path("/login");
 			};
 		};
 	});
