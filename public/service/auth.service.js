@@ -33,10 +33,11 @@
       window.localStorage.removeItem(LOCAL_TOKEN_KEY);
     };
 
-    var register = function (user) {
+    var signup = function (user) {
       return $q(function (resolve, reject) {
         $http.post('/auth/signup', user).then(function (result) {
           if (result.data.success) {
+            storeUserCredentials(result.data.token);
             resolve(result.data.msg);
           }
           else {
@@ -73,7 +74,7 @@
         }
       }
       , login: login
-      , register: register
+      , signup: signup
       , logout: logout
       , isAuthenticated: function () {
         return isAuthenticated;

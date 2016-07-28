@@ -21,13 +21,8 @@
     });
 
     self.isLoggedin = authService.isAuthenticated();
-    console.log(self.isLoggedin);
     self.userProfile = authService.getUserCredentials();
-//    authService.getUserCredentials().then(function(userProfile) {
-//      self.userProfile = userProfile;
-//      console.log(userProfile);
-//    });
-//
+
     function toggleList() {
       $mdSidenav('left').toggle();
     };
@@ -36,14 +31,6 @@
       authService.logout();
       location.reload();
     };
-
-//    function getUserInfo() {
-//      var jwt_token = localStorage.getItem(LOCAL_TOKEN_KEY);
-//      if (jwt_token) {
-//        var tokenPayload = jwtHelper.decodeToken(jwt_token.split(' ').slice(1)[0]);
-//        return tokenPayload;
-//      };
-//    };
 
   };
 })();

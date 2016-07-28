@@ -6,7 +6,7 @@ exports.signup = function (req, res) {
   if (!req.body.username || !req.body.email || !req.body.password) {
     res.json({
       success: false
-      , msg: 'Please pass name and password.'
+      , msg: 'Please input name and password.'
     });
   }
   else {
@@ -20,7 +20,7 @@ exports.signup = function (req, res) {
       if (err) {
         return res.json({
           success: false
-          , msg: 'Username already exists.'
+          , msg: 'Username or Email already exists.'
         });
       };
       var token = jwt.encode(newUser, config.secret);

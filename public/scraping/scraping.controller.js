@@ -58,9 +58,6 @@
     self.resetLinkInputForm = resetLinkInputForm;
     self.checkOut = checkOut;
 
-
-    console.log(localStorage.getItem('yourTokenKey'));
-
     function getScrapedItem() {
       $mdDialog.show(scrapeConfirm).then(function () {
         var link = {

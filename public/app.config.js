@@ -74,10 +74,10 @@ module('shopApp').run(function ($rootScope, authService, $location) {
 				$location.path('/login');
 			};
 		} else {
-//          if (next.$$route.templateUrl == 'auth/tmpl/login.tmpl.html' && next.$$route.templateUrl == 'auth/tmpl/signup.tmpl.html') {
-//				event.preventDefault();
-//				$location.path('/');
-//			};
+          if (next.$$route.templateUrl == 'auth/tmpl/login.tmpl.html' || next.$$route.templateUrl == 'auth/tmpl/signup.tmpl.html') {
+				event.preventDefault();
+				$location.path('/');
+			};
         };
 	});
 });
