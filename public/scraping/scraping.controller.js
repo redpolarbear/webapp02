@@ -4,51 +4,15 @@
 
   function ScrapingController($mdDialog, scrapingService, urlValidationService, $sce, weidianTokenService, collectionService, orderService, weidianService, authService, $log) {
     var self = this;
-    var scrapeConfirm = $mdDialog.confirm()
-                          .title('ARE YOU SURE?')
-                          .textContent('THE DOOR IS ABOUT TO OPEN ...')
-                          .ok('YES')
-                          .cancel('NO');
-    var resetConfirm = $mdDialog.confirm()
-                        .title('ARE YOU SURE?')
-                        .textContent('Close the door?')
-                        .ok('YES')
-                        .cancel('NO');
-    var successAlert = $mdDialog.alert()
-                        .title('THE DOOR IS OPEN!')
-                        .textContent('Welcome to the NEW WORLD!')
-                        .ariaLabel('Success Alert')
-                        .ok('OK');
-    var failureAlert = $mdDialog.alert()
-                        .title('Something wrong with the key!')
-                        .textContent('Please check the key you input!')
-                        .ariaLabel('Failure Alert')
-                        .ok('OK');
-    var notAvailableAlert = $mdDialog.alert()
-                        .title('The key is too advanced!')
-                        .textContent('We are trying hard to make the correct door for you!')
-                        .ariaLabel('Not Available Alert')
-                        .ok('OK');
-    var saveConfirm = $mdDialog.confirm()
-                        .title('ARE YOU SURE?')
-                        .textContent('Add To My Collections ...')
-                        .ok('YES')
-                        .cancel('NO');
-    var checkOutConfirm = $mdDialog.confirm()
-                        .title('ARE YOU SURE?')
-                        .textContent('Do you want to check out now?')
-                        .ok('YES')
-                        .cancel('NO');
-    var successSaveAlert = $mdDialog.alert()
-                        .title('Contratulations')
-                        .textContent('Has been saved into your collections!')
-                        .ariaLabel('Success Save Alert')
-                        .ok('OK');
-    var failureSaveAlert = $mdDialog.alert()
-                        .title('Warning')
-                        .textContent('Failed to add into your collections')
-                        .ariaLabel('Failure Save Alert')
-                        .ok('OK');
+    var scrapeConfirm = $mdDialog.confirm().title('ARE YOU SURE?').textContent('THE DOOR IS ABOUT TO OPEN ...').ok('YES').cancel('NO');
+    var resetConfirm = $mdDialog.confirm().title('ARE YOU SURE?').textContent('Close the door?').ok('YES').cancel('NO');
+    var successAlert = $mdDialog.alert().title('THE DOOR IS OPEN!').textContent('Welcome to the NEW WORLD!').ariaLabel('Success Alert').ok('OK');
+    var failureAlert = $mdDialog.alert().title('Something wrong with the key!').textContent('Please check the key you input!').ariaLabel('Failure Alert').ok('OK');
+    var notAvailableAlert = $mdDialog.alert().title('The key is too advanced!').textContent('We are trying hard to make the correct door for you!').ariaLabel('Not Available Alert').ok('OK');
+    var saveConfirm = $mdDialog.confirm().title('ARE YOU SURE?').textContent('Add To My Collections ...').ok('YES').cancel('NO');
+    var checkOutConfirm = $mdDialog.confirm().title('ARE YOU SURE?').textContent('Do you want to check out now?').ok('YES').cancel('NO');
+    var successSaveAlert = $mdDialog.alert().title('Contratulations').textContent('Has been saved into your collections!').ariaLabel('Success Save Alert').ok('OK');
+    var failureSaveAlert = $mdDialog.alert().title('Warning').textContent('Failed to add into your collections').ariaLabel('Failure Save Alert').ok('OK');
     var userProfile = {};
     self.hidingArrowShowing = false; //hiding the arrow switch
     self.formShowing = true; //showing the form request
@@ -58,7 +22,6 @@
     self.setImage = setImage;
     self.resetLinkInputForm = resetLinkInputForm;
     self.checkOut = checkOut;
-
     if (authService.isAuthenticated) {
       userProfile = authService.getUserCredentials();
     };
@@ -75,49 +38,46 @@
         //validate the input url (func)
         urlValidationService.urlValidationResult(link).then(function (response) {
           //get the scrape detail by callback function
-          scrapingService.getScrapedDetail(link)
-            .then(function (result) {
-              //return 'result' = if correct -> object.data is object if not correct -> object.data is 'error'
-              if (result.data == 'error') { //error
-                $mdDialog.hide();
-                $mdDialog.show(failureAlert);
-              }
-              else if (result.data == 'not available') { //not available
-                $mdDialog.hide();
-                $mdDialog.show(notAvailableAlert);
-              }
-              else { //success
-                $mdDialog.hide();
-                $mdDialog.show(successAlert);
-                self.item = result.data;
-                console.log(self.item); //sample
-                //present the Source, Icon and the From
-                self.source = sourceName(self.item.url).sourceName;
-                self.brandIconUrl = sourceName(self.item.url).brandIcon;
-                self.item.source = self.source;
-                self.item.brandIconUrl = self.brandIconUrl;
-                //load the colors
-                for (var i = 0; i < self.item.skus.length; i++) {
-                  self.colors.push(self.item.skus[i].color);
-                };
-                //add the creator to the self.item
-                self.item.creator = userProfile.username;
-                self.agent_percentage = userProfile.agent_percentage;
-
-                //after the color activated, load sizes - colorOnChange(color)
-                colorOnChange(self.colors[0]); //just need to load once in case that the color name of the two scraping items are the same.
-                //set the mainImageUrl
-
-                //set the quantities
-                self.quantities = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-                //set the description detail
-                self.finalDescriptionDetails = $sce.trustAsHtml(writeDescriptionDetail(self.item));
-                self.formShowing = false; //hide the form
-                self.hidingArrowShowing = true; //show the arrow switch
-                self.disableLinkInput = true; //disable the input
-                self.detailShowing = true; //show the detail framework
+          scrapingService.getScrapedDetail(link).then(function (result) {
+            //return 'result' = if correct -> object.data is object if not correct -> object.data is 'error'
+            if (result.data == 'error') { //error
+              $mdDialog.hide();
+              $mdDialog.show(failureAlert);
+            }
+            else if (result.data == 'not available') { //not available
+              $mdDialog.hide();
+              $mdDialog.show(notAvailableAlert);
+            }
+            else { //success
+              $mdDialog.hide();
+              $mdDialog.show(successAlert);
+              self.item = result.data;
+              console.log(self.item); //sample
+              //present the Source, Icon and the From
+              self.source = sourceName(self.item.url).sourceName;
+              self.brandIconUrl = sourceName(self.item.url).brandIcon;
+              self.item.source = self.source;
+              self.item.brandIconUrl = self.brandIconUrl;
+              //load the colors
+              for (var i = 0; i < self.item.skus.length; i++) {
+                self.colors.push(self.item.skus[i].color);
               };
-            });
+              //add the creator to the self.item
+              self.item.creator = userProfile.username;
+              self.agent_percentage = userProfile.agent_percentage;
+              //after the color activated, load sizes - colorOnChange(color)
+              colorOnChange(self.colors[0]); //just need to load once in case that the color name of the two scraping items are the same.
+              //set the mainImageUrl
+              //set the quantities
+              self.quantities = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+              //set the description detail
+              self.finalDescriptionDetails = $sce.trustAsHtml(writeDescriptionDetail(self.item));
+              self.formShowing = false; //hide the form
+              self.hidingArrowShowing = true; //show the arrow switch
+              self.disableLinkInput = true; //disable the input
+              self.detailShowing = true; //show the detail framework
+            };
+          });
         }, function (response) { //404 error
           $mdDialog.show(failureAlert);
         });
@@ -127,26 +87,24 @@
     };
 
     function addToMyCollections() {
-      $mdDialog.show(saveConfirm)
-        .then(function () {
-          scrapingService.saveScrapedDetail(self.item)
-            .then(function (savedScrapedItem) {
-              collectionService.saveToCollection(savedScrapedItem.data)
-                .then(function (savedCollectionItem) {
-                  if (savedCollectionItem.data.success) {
-                    $mdDialog.show(successSaveAlert);
-                  } else {
-                    $mdDialog.show(failureSaveAlert);
-                  };
-              }, function() { //error when saving to the collection...
-                $mdDialog.show(failureSaveAlert);
-              });
-          }, function() { //error when saving to the scraped...
+      $mdDialog.show(saveConfirm).then(function () {
+        scrapingService.saveScrapedDetail(self.item).then(function (savedScrapedItem) {
+          collectionService.saveToCollection(savedScrapedItem.data).then(function (savedCollectionItem) {
+            if (savedCollectionItem.data.success) {
+              $mdDialog.show(successSaveAlert);
+            }
+            else {
+              $mdDialog.show(failureSaveAlert);
+            };
+          }, function () { //error when saving to the collection...
             $mdDialog.show(failureSaveAlert);
           });
-        }, function() { //choose the "no" in the confirmation
-        //
+        }, function () { //error when saving to the scraped...
+          $mdDialog.show(failureSaveAlert);
         });
+      }, function () { //choose the "no" in the confirmation
+        //
+      });
     };
 
     function sourceName(url) {
@@ -173,18 +131,18 @@
     //change the color, will change the sizes and the images
     function colorOnChange(color) {
       self.original_price = self.item.skus.filter(findObjectbyColor(color))[0].original_price;
-      self.sales_price = self.item.skus.filter(findObjectbyColor(color))[0].sales_price?self.item.skus.filter(findObjectbyColor(color))[0].sales_price:'N/A';
+      self.sales_price = self.item.skus.filter(findObjectbyColor(color))[0].sales_price ? self.item.skus.filter(findObjectbyColor(color))[0].sales_price : 'N/A';
       self.sizes = self.item.skus.filter(findObjectbyColor(color))[0].sizes;
       self.imageUrls = self.item.imageUrls.filter(findObjectbyColor(color))[0].imageUrls;
       self.mainImageUrl = self.imageUrls[0];
-
       //calculate the CNY Price
       if (self.sales_price !== 'N/A') {
         self.basePrice = self.sales_price;
-      } else {
+      }
+      else {
         self.basePrice = self.original_price;
       };
-        self.cnyPrice =Math.round(parseFloat(self.basePrice.slice(1,self.basePrice.length-4))*1.12*5.2*(1+(userProfile.agent_percentage/100)));
+      self.cnyPrice = Math.round(parseFloat(self.basePrice.slice(1, self.basePrice.length - 4)) * 1.12 * 5.2 * (1 + (userProfile.agent_percentage / 100)));
     };
 
     function findObjectbyColor(color) {
@@ -215,158 +173,76 @@
           item.description_detail[i].list.forEach(function (element, index) {
             finalDescInfo += '<li>' + element + '</li>';
           });
-            finalDescInfo += '</ul>';
-          };
+          finalDescInfo += '</ul>';
         };
-
+      };
       return finalDescInfo;
     };
 
     function checkOut() {
-      $mdDialog.show(checkOutConfirm)
-        .then(function() { //if "yes"
-          //show the processing dialog -
-          //saving the images to the local,
-          //saving the scrapedItem
-          self.uploadingStatus = 'Preparing the material now...'
-          showUploadingToWeidianDialog();
-          scrapingService.saveScrapedDetail(self.item)
-            .then(function (savedItem) {
-              if (savedItem == 'error') {
-                $mdDialog.show(failureSaveAlert);
-              } else {
-                console.log(savedItem);
-                var newWeidianProduct = {
-                  itemName: '',
-                  price: self.cnyPrice,
-                  stock: self.quantity,
-                  free_delivery: '1', //default: no post
-                  remote_free_delivery: '1', //default: no remote post
-                  bigImgs: [],
-                  titles: [],
-                  cate_id: '85697021',
-                  merchant_code: savedItem.data._id,
-                  access_token: ''
-                };
-
-                newWeidianProduct.itemName =
-                  savedItem.data.title + '\n' +
-                  'COLOR: ' + self.color + '\n' +
-                  'SIZE: ' + self.size + '\n' +
-                  'Quantity: ' + self.quantity;
-
-                var imageLocalUrls = savedItem.data.imageLocalUrls.filter(findObjectbyColor(self.color))[0].localUrls;
-                for (var i = 0; i < imageLocalUrls.length; i++) {
-                  newWeidianProduct.titles.push('Product Image - ' + (i+1));
-                };
-
-                self.uploadingStatus = 'Uploading product to the Weidian now...'
-                weidianTokenService.weidianGetToken().then(function(tokenObj) {
-                  newWeidianProduct.access_token = tokenObj.data.result.access_token; //callback return is the JSON
-                  weidianService.uploadProduct(newWeidianProduct).then(function(result) {
-                    console.log(result);
-                    var itemid = JSON.parse(result.data).result.item_id; //return obj.data = String, so need the JSON.parse();
-                    console.log(itemid);
-                    imageLocalUrls.forEach(function(element, index) {
-                      var imgFile = {
-                        img: element,
-                        access_token: newWeidianProduct.access_token
-                      };
-                      weidianService.uploadImage(imgFile).then(function(imgURL) {
-                        var dataObj = JSON.parse(imgURL.data); //return obj.data = String, so need the JSON.parse();
-                        var appendImgFile = {
-                          itemid: itemid.toString(),
-//                          imgs: ["http://wd.geilicdn.com/vshop1469824620865-14299774.png?w=600&h=600"],
-                          imgs: [encodeURIComponent(JSON.parse(imgURL.data).result)],
-                          access_token: newWeidianProduct.access_token
-                        };
-                        console.log(JSON.parse(imgURL.data).result);
-                        weidianService.appendImage(appendImgFile).then(function(result) {
-                          console.log(JSON.parse(result.data).status.status_reason);
-                        }, function() {
-                          $mdDialog.show(failureSaveAlert);
-                        });
-                      }, function() {
-                        $mdDialog.show(failureSaveAlert);
-                      });
-                    });
-                  $mdDialog.hide();
-                  $mdDialog.show(successSaveAlert);
-                  }, function() {
-                    $mdDialog.show(failureSaveAlert);
-                  });
-                });
+      $mdDialog.show(checkOutConfirm).then(function () { //if "yes"
+        //show the processing dialog -
+        //saving the images to the local,
+        //saving the scrapedItem
+        showWIPDialog();
+        scrapingService.saveScrapedDetail(self.item).then(function (savedItem) {
+          if (savedItem == 'error') {
+            $mdDialog.show(failureSaveAlert);
+          }
+          else {
+            console.log(savedItem);
+            var newWeidianProduct = {
+              itemName: ''
+              , price: self.cnyPrice
+              , stock: self.quantity
+              , free_delivery: '1', //default: no post
+              remote_free_delivery: '1', //default: no remote post
+              bigImgs: []
+              , titles: []
+              , cate_id: '85697021'
+              , merchant_code: savedItem.data._id
+              , access_token: ''
+            };
+            newWeidianProduct.itemName = savedItem.data.title + '\n' + 'COLOR: ' + self.color + '\n' + 'SIZE: ' + self.size + '\n' + 'Quantity: ' + self.quantity;
+            var imageLocalUrl = savedItem.data.imageLocalUrls.filter(findObjectbyColor(self.color))[0].localUrls[0];
+            newWeidianProduct.titles = ['Product Image'];
+            weidianTokenService.weidianGetToken().then(function (tokenObj) {
+              newWeidianProduct.access_token = tokenObj.data.result.access_token; //callback return is the JSON
+              var imgFile = {
+                img: [imageLocalUrl]
+                , access_token: newWeidianProduct.access_token
               };
-            }, function() { //error when saving...
-              $mdDialog.show(failureSaveAlert);
+              weidianService.uploadImage(imgFile).then(function (imgURL) {
+                newWeidianProduct.bigImgs = [JSON.parse(imgURL.data).result];
+                weidianService.uploadProduct(newWeidianProduct).then(function (result) {
+                  console.log(result);
+                  var itemid = JSON.parse(result.data).result.item_id;
+                  $mdDialog.show(successAlert);
+                  var weidianProductUrl = 'http://weidian.com/item.html?itemID=' + itemid;
+
+
+                }, function () { //upload product error
+                  $mdDialog.show(failureAlert);
+                });
+              }, function () { //upload image error
+                $mdDialog.show(failureAlert);
+              });
+            }, function () { //getting token error
+              $mdDialog.show(failureAlert);
             });
-          }, function() { //choose the "no" in the confirmation
-
-          });
-          //saving to the orderItem
-          //checking the user if has the cate_id, if not (first time checkout), need to create the cate_id first and write back to the user db.
-
+          };
+        }, function () { //error when saving...
+          $mdDialog.show(failureSaveAlert);
+        });
+      }, function () { //choose the "no" in the confirmation
+      });
     };
+    //showing the preparing the product dialog -
+    //uploading the image to weidian
+    //uploading the product to the weidian
+    //showing the alert dialog that we will redirect to weidian product
+    //disable the checkout button
 
-//    function uploadImagesToWeidian(imgs, callback) {
-//      var access_token = '';
-//      var bigImgs = [];
-//      weidianTokenService.weidianGetToken()
-//        .then(function(tokenObj) {
-//          access_token = tokenObj.data.result.access_token; //callback return is the JSON
-//          imgs.forEach(function(element, index) {
-//            var imgFile = {
-//              img: element,
-//              access_token: access_token
-//            };
-//            weidianService.uploadImage(imgFile)
-//              .then(function(imgURL) {
-//                var dataObj = JSON.parse(imgURL.data); //return obj.data = String, so need the JSON.parse();
-//                bigImgs.push(dataObj.result);
-//              });
-//          });
-//          callback(bigImgs);
-//        });
-//    };
-
-//    function uploadProductToWeidian(imgs, newWeidianProduct, callback) {
-//      var access_token = '';
-//      var bigImgs = [];
-//      weidianTokenService.weidianGetToken()
-//        .then(function(tokenObj) {
-//          newWeidianProduct.access_token = tokenObj.data.result.access_token; //callback return is the JSON
-//          imgs.forEach(function(element, index) {
-//            var imgFile = {
-//              img: element,
-//              access_token: newWeidianProduct.access_token
-//            };
-//            weidianService.uploadImage(imgFile)
-//              .then(function(imgURL) {
-//                var dataObj = JSON.parse(imgURL.data); //return obj.data = String, so need the JSON.parse();
-//                bigImgs.push(dataObj.result);
-//              });
-//          });
-//          newWeidianProduct.bigImgs = bigImgs;
-//          weidianService.uploadProduct(newWeidianProduct)
-//            .then(function(result) {
-//              console.log(result);
-//              var idObj = JSON.parse(result.data); //return obj.data = String, so need the JSON.parse();
-//              console.log(idObj.result.item_id);
-//              callback(idObj.result.item_id);
-//            });
-//      });
-//    };
-
-
-
-
-        //showing the preparing the product dialog -
-          //uploading the image to weidian
-          //uploading the product to the weidian
-
-
-        //showing the alert dialog that we will redirect to weidian product
-          //disable the checkout button
 
     //reset the search result
     function resetLinkInputForm() {
@@ -387,22 +263,5 @@
         , clickOutsideToClose: false
       });
     };
-
-    function showUploadingToWeidianDialog() {
-      $mdDialog.show({
-        templateUrl: 'scraping/tmpl/uploadingtoweidian.wipdialog.tmpl.html'
-        , parent: angular.element(document.body)
-        , controller: 'uploadingProgressController'
-        , clickOutsideToClose: false
-        , locals: {
-          uploadingStatus: self.uploadingStatus
-        }
-      });
-      function uploadingProgressController($mdDialog, uploadingStatus) {
-        this.uploadingStatus = uploadingStatus;
-      };
-    };
-
-
   };
 })();
