@@ -10,25 +10,33 @@ var utils = require('../utils/utils.js');
 //get user's collections
 exports.getUserCollection = function (req, res) {
   var creator = req.params.creator;
+  var userName = req.user.username;
+  if (creator !== userName) {
+    res.send(401);
+  } else {
   collectionItem.find({creator: creator})
     .populate('scrapedItem')
     .exec(function(err, collectionItems) {
       if (err) console.log(err);
       res.json(collectionItems);
-//      console.log(collectionItems);
     });
+  };
 };
 
 //save the scrapedItem to user's collection
 exports.saveToCollection = function (req, res) {
       var newCollectionItem = new collectionItem();
-      newCollectionItem.creator = 'matthewxu';
-      newCollectionItem.scrapedItem = req.body.data._id;
+      newCollectionItem.creator = req.body.creator;
+      newCollectionItem.scrapedItem = req.body._id;
       newCollectionItem.save(function(err) {
         if (err) {
-          res.send('error');
+          res.json({
+            success: false
+          });
         } else {
-          res.send('OK');
+          res.json({
+            success: true
+          });
         };
       });
 }

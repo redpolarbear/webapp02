@@ -2,9 +2,10 @@
 
 var request = require('request');
 var TokenItem = require('./model/weidian.token.model');
+var weidianConfig = require('../../config/weidian');
 
-var appkey = '659335';
-var secret = '57371ee83d9f8b64f8a497af09ce1ffb';
+var appkey = weidianConfig.appkey;
+var secret = weidianConfig.secret;
 
 //return the final correct token;
 exports.returnToken = function (req, res) {

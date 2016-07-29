@@ -29,8 +29,8 @@ exports.list = function (url, cb) {
         url: url
         , title: $title
         , partnumber: $partnumber
-        , original_price: $original_price
-        , sales_price: $sales_price
+//        , original_price: $original_price
+//        , sales_price: $sales_price
         , skus: $skus
         , weight: $weight
         , dimension: $dimension

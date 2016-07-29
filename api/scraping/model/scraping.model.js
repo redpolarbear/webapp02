@@ -33,6 +33,7 @@ var scrapedItemSchema = new Schema({
     color: String,
     localUrls: [String]
   }],
+  creator: String,
   createTime: {
     type: Date,
     'default': Date.now

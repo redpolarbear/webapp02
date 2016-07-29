@@ -54,6 +54,7 @@ exports.saveItem = function (req, res) {
   newScrapedItem.source = req.body.source;
   newScrapedItem.brandIconUrl = req.body.brandIconUrl;
   newScrapedItem.url = req.body.url;
+  newScrapedItem.creator = req.body.creator;
   newScrapedItem.partnumber = req.body.partnumber;
 //  newScrapedItem.original_price = req.body.original_price;
 //  newScrapedItem.sales_price = req.body.sales_price;

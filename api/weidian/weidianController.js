@@ -6,6 +6,7 @@ var tokenCtrl = require('./weidianTokenController');
 var scrapedItem = require('../scraping/model/scraping.model');
 var weidianProduct = require('./model/weidian.product.model');
 var orderItem = require('../order/model/order.model');
+var collectionItem = require('../collection/model/collection.model');
 
 exports.uploadImage = function (req, res) {
   var weidianAPI_url = 'http://api.vdian.com/media/upload';

@@ -38,8 +38,14 @@
         </div>
         <!--   Item Title, Description and Price   -->
         <md-card-title>
-          <md-card-title-text> <span class="md-headline" align="center">{{ sc.item.title }}</span> <span class="md-subhead" align="center">{{ sc.item.description }}</span>
-            <!-- get the price from the sku --><span class="md-subhead" align="center">{{ sc.original_price }}</span> <span class="md-subhead" align="center">{{ sc.sales_price }}</span> </md-card-title-text>
+          <md-card-title-text>
+            <span class="md-headline" align="center">{{ sc.item.title }}</span>
+            <span class="md-subhead" align="center">{{ sc.item.description }}</span>
+            <!-- get the price from the sku -->
+            <span class="md-subhead" align="center">Original Price: {{ sc.original_price }}</span>
+            <span class="md-subhead" align="center">Sales Price: {{ sc.sales_price }}</span>
+            <span class="md-subhead" align="center">人民币价格: {{sc.basePrice}} * (12%)税 * ({{sc.agent_percentage}}%)代购费 * (5.2)汇率 = {{sc.cnyPrice}} 元</span>
+          </md-card-title-text>
         </md-card-title>
         <!--   Item Color, Sizes and Quantity   -->
         <md-card-content>

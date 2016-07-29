@@ -1,8 +1,8 @@
 (function () {
   'use strict';
-  angular.module('scrapingMod').controller('ScrapingController', ['$mdDialog', 'scrapingService', 'urlValidationService', '$sce', 'weidianTokenService', 'collectionService', 'orderService', 'weidianService', ScrapingController]);
+  angular.module('scrapingMod').controller('ScrapingController', ['$mdDialog', 'scrapingService', 'urlValidationService', '$sce', 'weidianTokenService', 'collectionService', 'orderService', 'weidianService', 'authService', ScrapingController]);
 
-  function ScrapingController($mdDialog, scrapingService, urlValidationService, $sce, weidianTokenService, collectionService, orderService, weidianService, $log) {
+  function ScrapingController($mdDialog, scrapingService, urlValidationService, $sce, weidianTokenService, collectionService, orderService, weidianService, authService, $log) {
     var self = this;
     var scrapeConfirm = $mdDialog.confirm()
                           .title('ARE YOU SURE?')
@@ -49,6 +49,7 @@
                         .textContent('Failed to add into your collections')
                         .ariaLabel('Failure Save Alert')
                         .ok('OK');
+    var userProfile = {};
     self.hidingArrowShowing = false; //hiding the arrow switch
     self.formShowing = true; //showing the form request
     self.getScrapedItem = getScrapedItem;
@@ -57,6 +58,10 @@
     self.setImage = setImage;
     self.resetLinkInputForm = resetLinkInputForm;
     self.checkOut = checkOut;
+
+    if (authService.isAuthenticated) {
+      userProfile = authService.getUserCredentials();
+    };
 
     function getScrapedItem() {
       $mdDialog.show(scrapeConfirm).then(function () {
@@ -95,6 +100,10 @@
                 for (var i = 0; i < self.item.skus.length; i++) {
                   self.colors.push(self.item.skus[i].color);
                 };
+                //add the creator to the self.item
+                self.item.creator = userProfile.username;
+                self.agent_percentage = userProfile.agent_percentage;
+
                 //after the color activated, load sizes - colorOnChange(color)
                 colorOnChange(self.colors[0]); //just need to load once in case that the color name of the two scraping items are the same.
                 //set the mainImageUrl
@@ -122,9 +131,9 @@
         .then(function () {
           scrapingService.saveScrapedDetail(self.item)
             .then(function (savedScrapedItem) {
-              collectionService.saveToCollection(savedScrapedItem)
+              collectionService.saveToCollection(savedScrapedItem.data)
                 .then(function (savedCollectionItem) {
-                  if (savedCollectionItem == 'error') {
+                  if (!savedCollectionItem.success) {
                     $mdDialog.show(failureSaveAlert);
                   } else {
                     $mdDialog.show(successSaveAlert);
@@ -168,6 +177,14 @@
       self.sizes = self.item.skus.filter(findObjectbyColor(color))[0].sizes;
       self.imageUrls = self.item.imageUrls.filter(findObjectbyColor(color))[0].imageUrls;
       self.mainImageUrl = self.imageUrls[0];
+
+      //calculate the CNY Price
+      if (self.sales_price !== 'N/A') {
+        self.basePrice = self.sales_price;
+      } else {
+        self.basePrice = self.original_price;
+      };
+        self.cnyPrice =Math.round(parseFloat(self.basePrice.slice(1,self.basePrice.length-4))*1.12*5.2*(1+(userProfile.agent_percentage/100)));
     };
 
     function findObjectbyColor(color) {
@@ -219,7 +236,7 @@
                 console.log(savedItem);
                 var newWeidianProduct = {
                   itemName: '',
-                  price: self.cnyTotalPrice,
+                  price: self.cnyPrice,
                   stock: self.quantity,
                   free_delivery: '0', //default: no post
                   remote_free_delivery: '1', //default: no remote post
@@ -232,8 +249,7 @@
                 newWeidianProduct.itemName =
                   savedItem.data.title + '\n' +
                   'COLOR: ' + self.color + '\n' +
-                  'SIZE: ' + self.size + '\n' +
-                  customizedComment;
+                  'SIZE: ' + self.size + '\n';
 
                 var imageLocalUrls = savedItem.data.imageLocalUrls.filter(findObjectbyColor(self.color))[0].localUrls;
                 weidianService.uploadImagesToWeidian(imageLocalUrls, function(bigImgs) {
