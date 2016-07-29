@@ -133,10 +133,10 @@
             .then(function (savedScrapedItem) {
               collectionService.saveToCollection(savedScrapedItem.data)
                 .then(function (savedCollectionItem) {
-                  if (!savedCollectionItem.success) {
-                    $mdDialog.show(failureSaveAlert);
-                  } else {
+                  if (savedCollectionItem.data.success) {
                     $mdDialog.show(successSaveAlert);
+                  } else {
+                    $mdDialog.show(failureSaveAlert);
                   };
               }, function() { //error when saving to the collection...
                 $mdDialog.show(failureSaveAlert);
