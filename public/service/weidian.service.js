@@ -10,7 +10,8 @@ function weidianService($http) {
   return {
     uploadProduct: uploadProduct,
     uploadImage: uploadImage,
-    saveOrder: saveOrder
+    saveOrder: saveOrder,
+    appendImage: appendImage
   };
 
   function uploadProduct(productDetail) {
@@ -22,6 +23,10 @@ function weidianService($http) {
   };
 
   function saveOrder(weidianProductInfo) {
-      return $http.post('api/saveorder', weidianProductInfo);
+      return $http.post('/api/saveorder', weidianProductInfo);
   };
+
+  function appendImage(imgFile) {
+    return $http.post('/api/appendimage', imgFile);
+  }
 };

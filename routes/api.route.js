@@ -23,6 +23,7 @@ router.post('/urlvalidation', scrapingController.verifyUrl);
 router.post('/uploadimage', weidianController.uploadImage);
 router.post('/uploadproduct', weidianController.uploadProduct);
 router.post('/saveorder', weidianController.saveOrder);
+router.post('/appendimage', weidianController.appendImage);
 
 router.get('/collection/:creator', auth.isParamsLegal, collectionController.getUserCollection);
 router.post('/collection/action/save', collectionController.saveToCollection);

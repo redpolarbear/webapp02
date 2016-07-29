@@ -228,6 +228,8 @@
           //show the processing dialog -
           //saving the images to the local,
           //saving the scrapedItem
+          self.uploadingStatus = 'Preparing the material now...'
+          showUploadingToWeidianDialog();
           scrapingService.saveScrapedDetail(self.item)
             .then(function (savedItem) {
               if (savedItem == 'error') {
@@ -238,30 +240,62 @@
                   itemName: '',
                   price: self.cnyPrice,
                   stock: self.quantity,
-                  free_delivery: '0', //default: no post
+                  free_delivery: '1', //default: no post
                   remote_free_delivery: '1', //default: no remote post
                   bigImgs: [],
                   titles: [],
-                  cate_id: '',
-                  merchant_code: savedItem.data._id
+                  cate_id: '85697021',
+                  merchant_code: savedItem.data._id,
+                  access_token: ''
                 };
 
                 newWeidianProduct.itemName =
                   savedItem.data.title + '\n' +
                   'COLOR: ' + self.color + '\n' +
-                  'SIZE: ' + self.size + '\n';
+                  'SIZE: ' + self.size + '\n' +
+                  'Quantity: ' + self.quantity;
 
                 var imageLocalUrls = savedItem.data.imageLocalUrls.filter(findObjectbyColor(self.color))[0].localUrls;
-                weidianService.uploadImagesToWeidian(imageLocalUrls, function(bigImgs) {
-                  
-                  newWeidianProduct.bigImgs = bigImgs;
-                  
+                for (var i = 0; i < imageLocalUrls.length; i++) {
+                  newWeidianProduct.titles.push('Product Image - ' + (i+1));
+                };
+
+                self.uploadingStatus = 'Uploading product to the Weidian now...'
+                weidianTokenService.weidianGetToken().then(function(tokenObj) {
+                  newWeidianProduct.access_token = tokenObj.data.result.access_token; //callback return is the JSON
+                  weidianService.uploadProduct(newWeidianProduct).then(function(result) {
+                    console.log(result);
+                    var itemid = JSON.parse(result.data).result.item_id; //return obj.data = String, so need the JSON.parse();
+                    console.log(itemid);
+                    imageLocalUrls.forEach(function(element, index) {
+                      var imgFile = {
+                        img: element,
+                        access_token: newWeidianProduct.access_token
+                      };
+                      weidianService.uploadImage(imgFile).then(function(imgURL) {
+                        var dataObj = JSON.parse(imgURL.data); //return obj.data = String, so need the JSON.parse();
+                        var appendImgFile = {
+                          itemid: itemid.toString(),
+//                          imgs: ["http://wd.geilicdn.com/vshop1469824620865-14299774.png?w=600&h=600"],
+                          imgs: [encodeURIComponent(JSON.parse(imgURL.data).result)],
+                          access_token: newWeidianProduct.access_token
+                        };
+                        console.log(JSON.parse(imgURL.data).result);
+                        weidianService.appendImage(appendImgFile).then(function(result) {
+                          console.log(JSON.parse(result.data).status.status_reason);
+                        }, function() {
+                          $mdDialog.show(failureSaveAlert);
+                        });
+                      }, function() {
+                        $mdDialog.show(failureSaveAlert);
+                      });
+                    });
+                  $mdDialog.hide();
+                  $mdDialog.show(successSaveAlert);
+                  }, function() {
+                    $mdDialog.show(failureSaveAlert);
+                  });
                 });
-
-
-
-                $mdDialog.show(successSaveAlert);
-
               };
             }, function() { //error when saving...
               $mdDialog.show(failureSaveAlert);
@@ -269,34 +303,60 @@
           }, function() { //choose the "no" in the confirmation
 
           });
-
-
-
           //saving to the orderItem
           //checking the user if has the cate_id, if not (first time checkout), need to create the cate_id first and write back to the user db.
 
     };
 
-    function uploadImagesToWeidian(imgs, callback) {
-      var access_token = "";
-      var bigImgs = [];
-      weidianTokenAPI.weidianGetToken()
-        .then(function(tokenObj) {
-          access_token = tokenObj.data.result.access_token; //callback return is the JSON
-          imgs.forEach(function(element, index) {
-            var imgFile = {
-              img: element,
-              access_token: access_token
-            };
-            weidianService.uploadImage(imgFile)
-              .then(function(imgURL) {
-                var dataObj = JSON.parse(imgURL.data); //return obj.data = String, so need the JSON.parse();
-                bigImgs.push(dataObj.result);
-              });
-          });
-          callback(bigImgs);
-        });
-    };
+//    function uploadImagesToWeidian(imgs, callback) {
+//      var access_token = '';
+//      var bigImgs = [];
+//      weidianTokenService.weidianGetToken()
+//        .then(function(tokenObj) {
+//          access_token = tokenObj.data.result.access_token; //callback return is the JSON
+//          imgs.forEach(function(element, index) {
+//            var imgFile = {
+//              img: element,
+//              access_token: access_token
+//            };
+//            weidianService.uploadImage(imgFile)
+//              .then(function(imgURL) {
+//                var dataObj = JSON.parse(imgURL.data); //return obj.data = String, so need the JSON.parse();
+//                bigImgs.push(dataObj.result);
+//              });
+//          });
+//          callback(bigImgs);
+//        });
+//    };
+
+//    function uploadProductToWeidian(imgs, newWeidianProduct, callback) {
+//      var access_token = '';
+//      var bigImgs = [];
+//      weidianTokenService.weidianGetToken()
+//        .then(function(tokenObj) {
+//          newWeidianProduct.access_token = tokenObj.data.result.access_token; //callback return is the JSON
+//          imgs.forEach(function(element, index) {
+//            var imgFile = {
+//              img: element,
+//              access_token: newWeidianProduct.access_token
+//            };
+//            weidianService.uploadImage(imgFile)
+//              .then(function(imgURL) {
+//                var dataObj = JSON.parse(imgURL.data); //return obj.data = String, so need the JSON.parse();
+//                bigImgs.push(dataObj.result);
+//              });
+//          });
+//          newWeidianProduct.bigImgs = bigImgs;
+//          weidianService.uploadProduct(newWeidianProduct)
+//            .then(function(result) {
+//              console.log(result);
+//              var idObj = JSON.parse(result.data); //return obj.data = String, so need the JSON.parse();
+//              console.log(idObj.result.item_id);
+//              callback(idObj.result.item_id);
+//            });
+//      });
+//    };
+
 
 
 
@@ -324,8 +384,25 @@
       $mdDialog.show({
         templateUrl: 'scraping/tmpl/scraping.wipdialog.tmpl.html'
         , parent: angular.element(document.body)
-        , clickOutsideToClose: true
+        , clickOutsideToClose: false
       });
     };
+
+    function showUploadingToWeidianDialog() {
+      $mdDialog.show({
+        templateUrl: 'scraping/tmpl/uploadingtoweidian.wipdialog.tmpl.html'
+        , parent: angular.element(document.body)
+        , controller: 'uploadingProgressController'
+        , clickOutsideToClose: false
+        , locals: {
+          uploadingStatus: self.uploadingStatus
+        }
+      });
+      function uploadingProgressController($mdDialog, uploadingStatus) {
+        this.uploadingStatus = uploadingStatus;
+      };
+    };
+
+
   };
 })();

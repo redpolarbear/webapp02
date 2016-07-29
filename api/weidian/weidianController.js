@@ -22,9 +22,33 @@ exports.uploadImage = function (req, res) {
   }, function (err, httpResponse, body) {
     if (err) {
       res.send('error');
+    } else {
+      res.json(body);
     };
-    res.json(body);
   });
+};
+
+exports.appendImage = function(req, res) {
+  var weidianAPI_url = 'https://api.vdian.com/api?';
+  var param = {
+    itemid: req.body.itemid,
+    imgs: req.body.imgs
+  };
+  var public_param = {
+    method: 'vdian.item.image.add',
+    access_token: req.body.access_token,
+    version: '1.0',
+    format: 'json'
+  };
+  var requestUrl = weidianAPI_url + 'param=' + JSON.stringify(param) + '&public=' + JSON.stringify(public_param);
+  console.log(requestUrl);
+  request.get(requestUrl, function(err, response, body) {
+    if (err) {
+      res.send('error');
+    } else {
+      res.json(body);
+    };
+  })
 };
 
 exports.uploadProduct = function (req, res) {
