@@ -1,7 +1,8 @@
 'use strict';
 var User = require('./model/user.model');
 var config = require('../../config/index');
-var jwt = require('jwt-simple');
+//var jwt = require('jwt-simple');
+var jwt = require('jsonwebtoken');
 exports.signup = function (req, res) {
   if (!req.body.username || !req.body.email || !req.body.password) {
     res.json({
@@ -23,7 +24,10 @@ exports.signup = function (req, res) {
           , msg: 'Username or Email already exists.'
         });
       };
-      var token = jwt.encode(newUser, config.secret);
+      var token = jwt.sign(newUser, config.secret, {
+        expiresIn: '1d'
+      });
+      console.log(token);
       res.json({
         success: true
         , token: 'Bearer ' + token
@@ -42,21 +46,21 @@ exports.login = function (req, res) {
         success: false
         , msg: 'Authentication failed. User not found.'
       });
-    }
-    else {
+    } else {
       // check if password matches
       user.comparePassword(req.body.password, function (err, isMatch) {
         if (isMatch && !err) {
           // if user is found and password is right create a token
-          var token = jwt.encode(user, config.secret);
+          var token = jwt.sign(newUser, config.secret, {
+            expiresIn: '1d'
+          });
           // return the information including token as JSON
           res.json({
             success: true
             , token: 'Bearer ' + token
             , msg: 'Successfully logged in.'
           });
-        }
-        else {
+        } else {
           res.send({
             success: false
             , msg: 'Authentication failed. Wrong password.'

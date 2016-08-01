@@ -25,7 +25,7 @@ router.post('/uploadproduct', weidianController.uploadProduct);
 router.post('/saveorder', weidianController.saveOrder);
 router.post('/appendimage', weidianController.appendImage);
 
-router.get('/collection/:creator', auth.isParamsLegal, collectionController.getUserCollection);
+router.get('/collection/:creator', collectionController.getUserCollection);
 router.post('/collection/action/save', collectionController.saveToCollection);
 
 router.get('/gettoken', weidianTokenController.returnToken);

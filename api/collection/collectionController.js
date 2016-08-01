@@ -10,7 +10,7 @@ var utils = require('../utils/utils.js');
 //get user's collections
 exports.getUserCollection = function (req, res) {
   var creator = req.params.creator;
-  var userName = req.user.username;
+  var userName = req.user._doc.username;
   if (creator !== userName) {
     res.send(401);
   } else {

@@ -19,23 +19,23 @@ function isLoggedin() {
     })
     // Attach user to request
     .use(function (req, res, next) {
-      User.findById(req.user._id, function (err, user) {
+      User.findById(req.user._doc._id, function (err, user) {
         if (err) return next(err);
-        if (!user) return res.send(401);
-        if (req.user._id == user._id) {
+        if (!user) return res.sendStatus(401);
+        if (req.user._doc._id == user._id) {
           next();
         } else {
-          return res.send(401);
+          return res.sendStatus(401);
         };
       });
     });
 };
 
 var isParamsLegal = function (req, res, next) {
-  if (req.params.creator == req.user.username) {
+  if (req.params.creator == req.user._doc.username) {
     next();
   } else {
-    return res.send(401);
+    return res.sendStatus(401);
   }
 };
 

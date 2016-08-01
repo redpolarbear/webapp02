@@ -23,7 +23,7 @@
     self.resetLinkInputForm = resetLinkInputForm;
     self.checkOut = checkOut;
     if (authService.isAuthenticated) {
-      userProfile = authService.getUserCredentials();
+      userProfile = authService.getUserCredentials()._doc;
     };
 
     function getScrapedItem() {

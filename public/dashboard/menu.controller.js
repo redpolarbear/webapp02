@@ -19,7 +19,7 @@
 //      self.menus = [].concat(menus);
 //    });
     self.isLoggedin = authService.isAuthenticated();
-    self.userProfile = authService.getUserCredentials();
+    self.userProfile = authService.getUserCredentials()._doc;
 
     if (self.isLoggedin) {
       console.log(self.userProfile);
