@@ -25,7 +25,7 @@ exports.signup = function (req, res) {
         });
       };
       var token = jwt.sign(newUser, config.secret, {
-        expiresIn: '1d'
+        expiresIn: 20
       });
       console.log(token);
       res.json({
@@ -51,8 +51,8 @@ exports.login = function (req, res) {
       user.comparePassword(req.body.password, function (err, isMatch) {
         if (isMatch && !err) {
           // if user is found and password is right create a token
-          var token = jwt.sign(newUser, config.secret, {
-            expiresIn: '1d'
+          var token = jwt.sign(user, config.secret, {
+            expiresIn: 20
           });
           // return the information including token as JSON
           res.json({

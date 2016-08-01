@@ -65,19 +65,26 @@ angular.
   ]);
 
 angular.
-module('shopApp').run(function ($rootScope, authService, $location) {
+module('shopApp').run(function ($rootScope, authService, $location, $http) {
 	// register listener to watch route changes
 	$rootScope.$on('$routeChangeStart', function (event, next, current) {
-		if (!authService.isAuthenticated()) {
-			if (next.$$route.templateUrl !== 'auth/tmpl/login.tmpl.html' && next.$$route.templateUrl !== 'auth/tmpl/signup.tmpl.html') {
-				event.preventDefault();
-				$location.path('/login');
-			};
+		if ($http.defaults.headers.common.Authorization == undefined) {
+          if (next.$$route !== undefined) {
+            if (next.$$route.templateUrl !== 'auth/tmpl/login.tmpl.html' && next.$$route.templateUrl !== 'auth/tmpl/signup.tmpl.html') {
+              event.preventDefault();
+              $location.path('/login');
+            };
+          } else {
+            event.preventDefault();
+            $location.path('/');
+          };
 		} else {
-          if (next.$$route.templateUrl == 'auth/tmpl/login.tmpl.html' || next.$$route.templateUrl == 'auth/tmpl/signup.tmpl.html') {
-				event.preventDefault();
-				$location.path('/');
-			};
+          if (next.$$route !== undefined) {
+            if (next.$$route.templateUrl == 'auth/tmpl/login.tmpl.html' || next.$$route.templateUrl == 'auth/tmpl/signup.tmpl.html') {
+              event.preventDefault();
+              $location.path('/');
+            };
+          };
         };
 	});
 });

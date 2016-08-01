@@ -67,6 +67,12 @@
 
     loadUserCredentials();
 
+   if (authToken !== undefined){
+     if(jwtHelper.isTokenExpired(authToken)) {
+      destroyUserCredentials();
+     };
+   };
+
     return {
       getUserCredentials: function() {
         if (authToken) {
@@ -86,6 +92,7 @@
         $rootScope.$broadcast({
           401: AUTH_EVENTS.notAuthenticated
         , }[response.status], response);
+        location.reload();
         return $q.reject(response);
       }
     };
