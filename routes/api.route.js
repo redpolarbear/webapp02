@@ -14,7 +14,7 @@ var expressJWT = require('express-jwt');
 var router = express.Router();
 
 
-//router.use(expressJWT({ secret: config.secret}));
+//Note: router.use(expressJWT({ secret: config.secret}));
 router.use(auth.isLoggedin());
 router.post('/scrape', scrapingController.scrapeItem);
 router.post('/save', scrapingController.saveItem);
@@ -27,6 +27,8 @@ router.post('/appendimage', weidianController.appendImage);
 
 router.get('/collection/:creator', auth.isParamsLegal, collectionController.getUserCollection);
 router.post('/collection/action/save', collectionController.saveToCollection);
+router.delete('/collection/action/remove/:id', collectionController.removeFromCollection);
+
 
 router.get('/gettoken', weidianTokenController.returnToken);
 

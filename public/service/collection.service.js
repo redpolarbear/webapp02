@@ -7,6 +7,7 @@
 		return {
 			getUserCollection: getUserCollection
 			, saveToCollection: saveToCollection
+            ,removeFromCollection:removeFromCollection
 		};
 
 		function getUserCollection(creator) {
@@ -14,7 +15,11 @@
 		};
 
 		function saveToCollection(newScrapedItem) {
-			return $http.post('/api/collection/action/save', newScrapedItem);
+			return $http.post('/api/collection/action/save/', newScrapedItem);
 		};
+
+        function removeFromCollection(collectionItemId) {
+          return $http.delete('/api/collection/action/remove/' + collectionItemId);
+        };
 	}
 })();

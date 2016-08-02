@@ -109,4 +109,12 @@ p.secondary {
   width: 100%;
 }
 
+.created_tag {
+  padding-left: 12px;
+}
+
+.mini-action-button:hover {
+  background-color: #EEEEEE !important;
+}
+
 

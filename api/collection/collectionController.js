@@ -19,6 +19,7 @@ exports.getUserCollection = function (req, res) {
     .exec(function(err, collectionItems) {
       if (err) console.log(err);
       res.json(collectionItems);
+      console.log(collectionItems);
     });
   };
 };
@@ -39,6 +40,20 @@ exports.saveToCollection = function (req, res) {
           });
         };
       });
-}
+};
+
+exports.removeFromCollection = function(req, res) {
+  var _id = req.params.id;
+  collectionItem.findByIdAndRemove(_id, function(err) {
+    if (err) {
+      console.log(err);
+    } else {
+      res.json({
+        success: true,
+        msg: 'deleted'
+      })
+    };
+  });
+};
 
 

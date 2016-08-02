@@ -22,9 +22,14 @@
 
     if (self.isLoggedin) {
       self.userProfile = authService.getUserCredentials()._doc;
-      console.log(self.userProfile);
-      var userName = self.userProfile.username;
-      var userRole = self.userProfile.role;
+      if (self.userProfile == undefined) {
+        authService.logout();
+        self.isLoggedin = false;
+      } else {
+        console.log(self.userProfile);
+        var userName = self.userProfile.username;
+        var userRole = self.userProfile.role;
+      };
       var menuItems = [
         {
           name: 'I WANNA BUY~BUY~BUY~'

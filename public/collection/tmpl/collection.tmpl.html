@@ -7,17 +7,27 @@
 <div ng-controller="CollectionController as cc" ng-cloak>
   <md-content class="md-padding">
     <div layout="row" layout-xs="column" layout-wrap>
-      <md-card flex-xs flex-gt-xs="30" ng-repeat='item in cc.collectionItems'>
+      <md-card flex-xs flex-gt-xs="16" ng-repeat='(index, item) in cc.collectionItems'>
         <md-card-header>
           <md-card-avatar>
             <img class="md-user-avatar" ng-src="{{ item.scrapedItem.brandIconUrl }}">
           </md-card-avatar>
           <md-card-header-text>
             <span class="md-title">{{ item.scrapedItem.source }}</span>
-            <span class="md-subhead"><a href="{{ item.scrapeItem.url }}">{{ item.scrapedItem.title }}</a></span>
+            <span class="md-subhead"><a target="_blank" href="{{ item.scrapedItem.url }}">{{ item.scrapedItem.title }}</a></span>
           </md-card-header-text>
         </md-card-header>
         <img ng-src="{{item.scrapedItem.imageLocalUrls[0].localUrls[0]}}" class="md-card-image">
+        <md-card-actions layout="row" layout-align="start center">
+          <span class="created_tag">Collected: {{ item.scrapedItem.createTime.slice(0,10) }}</span>
+          <span flex></span>
+          <md-button class="md-icon-button mini-action-button" aria-label="Cart" ng-click="">
+            <md-icon md-svg-src="cart_collection"></md-icon>
+          </md-button>
+          <md-button class="md-icon-button mini-action-button" aria-label="Remove" ng-click="cc.removeCollectionItem(item._id, index)">
+            <md-icon md-svg-src="remove_collection"></md-icon>
+          </md-button>
+        </md-card-actions>
 <!--
         <md-card-title>
           <md-card-title-text>

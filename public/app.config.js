@@ -55,7 +55,9 @@ angular.
         .icon("my_account"      , "./assets/svg/my_account.svg"      , 48)
         .icon("admin_area"      , "./assets/svg/admin_area.svg"      , 48)
         .icon("up_arrow"        , "./assets/svg/up_arrow.svg"        , 48)
-        .icon("down_arrow"      , "./assets/svg/down_arrow.svg"      , 48);
+        .icon("down_arrow"      , "./assets/svg/down_arrow.svg"      , 48)
+        .icon("remove_collection" , "./assets/svg/remove_collection.svg", 48)
+        .icon("cart_collection" , "./assets/svg/cart_collection.svg", 48);
 
 
 //      $mdThemingProvider.theme('default')
