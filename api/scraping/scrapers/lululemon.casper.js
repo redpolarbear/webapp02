@@ -46,6 +46,7 @@ casper.start(casper.cli.get(0), function () {
   for (var n = 1; n < 20; n++) {
     casper.thenClick('#pdp-form > section.section-color-swatch > div.color-swatch.show-one-hook.closed > div > div > span:nth-child(' + n + ') > a', function (l) {
       casper.wait(3000, function () {
+//        $('#select-size').val('2');
         if (lululemon_item.skus.length == 0) {
           //get the name of the title
           var $title = this.evaluate(function () {
@@ -93,6 +94,7 @@ casper.start(casper.cli.get(0), function () {
           return document.querySelector('#pdp-product-attributes > div > div > div > div > div > div > div.product-description.duplicated > div.price-fixed').textContent.trim();
         });
         var $sales_price = this.evaluate(function () {
+//          $('#select-size option').eq(1).prop('selected',true)
           return document.querySelector('#pdp-product-attributes > div > div > div > div > div > div > div.product-description.duplicated > div.price-markdown > div.price-sale').textContent.trim();
         });
         //get the number of colors
@@ -116,11 +118,13 @@ casper.start(casper.cli.get(0), function () {
             return e.getAttribute('srcset');
           });
         });
+        var $width = 'N/A';
         lululemon_item.skus.push({
           original_price: $original_price,
           sales_price: $sales_price,
-          color: $color
-          , sizes: $sizes
+          color: $color,
+          sizes: $sizes,
+          width: $width
         });
         lululemon_item.imageUrls.push({
           color: $color

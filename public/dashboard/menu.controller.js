@@ -38,26 +38,26 @@
           , role: 100
           , href: '/'
       }
-      , {
-          name: 'My Collections'
-          , icon: 'my_collections'
-          , description: 'SECRET BASE FOR ADVANTURE'
-          , role: 100
-          , href: '/collection/' + userName
-      }
-      , {
-          name: 'My Promos'
-          , icon: 'my_promos'
-          , description: 'SECRET FATAL WEAPON'
-          , role: 100
-          , href: '/promo/' + userName
-      }
+//      , {
+//          name: 'My Promos'
+//          , icon: 'my_promos'
+//          , description: 'SECRET FATAL WEAPON'
+//          , role: 100
+//          , href: '/promo/' + userName
+//      }
       , {
           name: 'My Orders'
           , icon: 'my_orders'
           , description: 'TROPHIES OF ADVANTURE'
           , role: 100
           , href: '/order/' + userName
+      }
+      , {
+          name: 'My Collections'
+          , icon: 'my_collections'
+          , description: 'SECRET BASE FOR ADVANTURE'
+          , role: 100
+          , href: '/collection/' + userName
       }
       , {
           name: 'My Account'

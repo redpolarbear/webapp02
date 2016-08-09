@@ -5,9 +5,9 @@
 </div>
 -->
 <div ng-controller="CollectionController as cc" ng-cloak>
-  <md-content class="md-padding">
-    <div layout="row" layout-xs="column" layout-wrap>
-      <md-card flex-xs flex-gt-xs="16" ng-repeat='(index, item) in cc.collectionItems'>
+  <md-content class="md-padding" layout-xs="column" layout="row" layout-wrap>
+    <div flex-xs="" flex-sm="50" flex-gt-sm="30" flex-gt-md="20" ng-repeat='(index, item) in cc.collectionItems'>
+      <md-card >
         <md-card-header>
           <md-card-avatar>
             <img class="md-user-avatar" ng-src="{{ item.scrapedItem.brandIconUrl }}">

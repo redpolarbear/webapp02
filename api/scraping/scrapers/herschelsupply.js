@@ -29,11 +29,13 @@ exports.list = function (url, cb) {
       var $sizes = [];
       $sizes[0] = "ONE SIZE";
       var $color = $('.product-color').text();
+      var $width = 'N/A';
       var $skus = [{
         original_price: $original_price,
         sales_price: $sales_price,
         color: $color,
-        sizes: $sizes
+        sizes: $sizes,
+        width: $width
       }];
       var $image_Urls = [];
       $('#product-thumbs > ul > li > img').each(function (i, elem) {

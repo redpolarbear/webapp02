@@ -16,6 +16,7 @@ var scrapedItemSchema = new Schema({
     sales_price: String, //CAD
     color: String,
     sizes: [String],
+    width: [String]
   }],
   weight: String,
   dimension: String,
