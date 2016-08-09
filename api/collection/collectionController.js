@@ -19,7 +19,7 @@ exports.getUserCollection = function (req, res) {
     .exec(function(err, collectionItems) {
       if (err) console.log(err);
       res.json(collectionItems);
-      console.log(collectionItems);
+//      console.log(collectionItems);
     });
   };
 };

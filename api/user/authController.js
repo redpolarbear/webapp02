@@ -27,7 +27,7 @@ exports.signup = function (req, res) {
       var token = jwt.sign(newUser, config.secret, {
         expiresIn: '1d'
       });
-      console.log(token);
+//      console.log(token);
       res.json({
         success: true
         , token: 'Bearer ' + token

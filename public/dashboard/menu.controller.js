@@ -26,7 +26,7 @@
         authService.logout();
         self.isLoggedin = false;
       } else {
-        console.log(self.userProfile);
+//        console.log(self.userProfile);
         var userName = self.userProfile.username;
         var userRole = self.userProfile.role;
       };

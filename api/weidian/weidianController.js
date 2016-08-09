@@ -41,7 +41,7 @@ exports.appendImage = function(req, res) {
     format: 'json'
   };
   var requestUrl = weidianAPI_url + 'param=' + JSON.stringify(param) + '&public=' + JSON.stringify(public_param);
-  console.log(requestUrl);
+//  console.log(requestUrl);
   request.get(requestUrl, function(err, response, body) {
     if (err) {
       res.send('error');

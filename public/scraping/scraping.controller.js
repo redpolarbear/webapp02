@@ -52,7 +52,7 @@
               $mdDialog.hide();
               $mdDialog.show(successAlert);
               self.item = result.data;
-              console.log(self.item); //sample
+//              console.log(self.item); //sample
               //present the Source, Icon and the From
               self.source = sourceName(self.item.url).sourceName;
               self.brandIconUrl = sourceName(self.item.url).brandIcon;
@@ -190,7 +190,7 @@
             $mdDialog.show(failureSaveAlert);
           }
           else {
-            console.log(savedItem);
+//            console.log(savedItem);
             var newWeidianProduct = {
               itemName: ''
               , price: self.cnyPrice
@@ -215,7 +215,7 @@
               weidianService.uploadImage(imgFile).then(function (imgURL) {
                 newWeidianProduct.bigImgs = [JSON.parse(imgURL.data).result];
                 weidianService.uploadProduct(newWeidianProduct).then(function (result) {
-                  console.log(result);
+//                  console.log(result);
                   var itemid = JSON.parse(result.data).result.item_id;
                   $mdDialog.show(successAlert);
                   var weidianProductUrl = 'http://weidian.com/item.html?itemID=' + itemid;
