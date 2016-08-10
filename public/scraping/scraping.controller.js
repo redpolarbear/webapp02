@@ -4,7 +4,16 @@
 
   function ScrapingController($mdDialog, scrapingService, urlValidationService, $sce, weidianTokenService, collectionService, orderService, weidianService, authService, $log) {
     var self = this;
-    var scrapeConfirm = $mdDialog.confirm().title('ARE YOU SURE?').textContent('THE DOOR IS ABOUT TO OPEN ...').ok('YES').cancel('NO');
+    var scrapeConfirm = $mdDialog.confirm()
+                          .title('ARE YOU SURE?')
+                          .textContent('THE DOOR IS ABOUT TO OPEN ...')
+                          .ok('YES')
+                          .cancel('NO');
+    var weidianRedirectConfirm = $mdDialog.confirm()
+                                   .title('ARE YOU SURE?')
+                                   .textContent('Open the Weidian Link Now???')
+                                   .ok('YES')
+                                   .cancel('NO');
     var resetConfirm = $mdDialog.confirm().title('ARE YOU SURE?').textContent('Close the door?').ok('YES').cancel('NO');
     var successAlert = $mdDialog.alert().title('THE DOOR IS OPEN!').textContent('Welcome to the NEW WORLD!').ariaLabel('Success Alert').ok('OK');
     var failureAlert = $mdDialog.alert().title('Something wrong with the key!').textContent('Please check the key you input!').ariaLabel('Failure Alert').ok('OK');
@@ -13,6 +22,11 @@
     var checkOutConfirm = $mdDialog.confirm().title('ARE YOU SURE?').textContent('Do you want to check out now?').ok('YES').cancel('NO');
     var successSaveAlert = $mdDialog.alert().title('Contratulations').textContent('Has been saved into your collections!').ariaLabel('Success Save Alert').ok('OK');
     var failureSaveAlert = $mdDialog.alert().title('Warning').textContent('Failed to add into your collections').ariaLabel('Failure Save Alert').ok('OK');
+    var checkOutReminderAlert = $mdDialog.alert()
+                                  .title('Reminder')
+                                  .textContent('You may find the Weidian Link in - "My Order"')
+                                  .ariaLabel('Checkout Reminder Alert')
+                                  .ok('OK');
     var userProfile = {};
     self.hidingArrowShowing = false; //hiding the arrow switch
     self.formShowing = true; //showing the form request
@@ -138,9 +152,11 @@
       //calculate the CNY Price
       if (self.sales_price !== 'N/A') {
         self.basePrice = self.sales_price;
+        self.isSales = true;
       }
       else {
         self.basePrice = self.original_price;
+        self.isSales = false;
       };
       self.cnyPrice = Math.round(parseFloat(self.basePrice.slice(1, self.basePrice.length - 4)) * 1.12 * 5.2 * (1 + (userProfile.agent_percentage / 100)));
     };
@@ -193,13 +209,13 @@
             console.log(savedItem);
             var newWeidianProduct = {
               itemName: ''
-              , price: self.cnyPrice
+              , price: self.cnyPrice * self.quantity
               , stock: self.quantity
               , free_delivery: '1', //default: no post
               remote_free_delivery: '1', //default: no remote post
               bigImgs: []
               , titles: []
-              , cate_id: '85697021'
+              , cate_id: '85697021' //category - shop.afc
               , merchant_code: savedItem.data._id
               , access_token: ''
             };
@@ -217,8 +233,12 @@
                 weidianService.uploadProduct(newWeidianProduct).then(function (result) {
                   console.log(result);
                   var itemid = JSON.parse(result.data).result.item_id;
-                  $mdDialog.show(successAlert);
                   var weidianProductUrl = 'http://weidian.com/item.html?itemID=' + itemid;
+                  $mdDialog.show(weidianRedirectConfirm).then(function () {
+                    window.open(weidianProductUrl,'_blank');
+                  }, function() {
+                    $mdDialog.show(checkOutReminderAlert);
+                  });
 
 
                 }, function () { //upload product error

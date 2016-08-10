@@ -18,8 +18,8 @@
               </div>
             </md-input-container>
             <md-card-actions layout="row" layout-align="end center">
-              <md-button type="submit" ng-disabled="linkInputForm.$invalid?linkInputForm.$invalid:sc.disableLinkInput" class="md-raised md-primary">MAMI~MAMI~HONG~~</md-button>
-              <md-button type="button" class="md-raised md-accent" ng-click="sc.resetLinkInputForm()">A~MI~TOFO~~</md-button>
+              <md-button type="submit" ng-disabled="linkInputForm.$invalid?linkInputForm.$invalid:sc.disableLinkInput" class="md-raised md-primary">GO!</md-button>
+              <md-button type="button" class="md-raised md-accent" ng-click="sc.resetLinkInputForm()">RESET</md-button>
             </md-card-actions>
           </form>
         </md-card-content>
@@ -43,8 +43,8 @@
             <span class="md-subhead" align="center">{{ sc.item.description }}</span>
             <!-- get the price from the sku -->
             <span class="md-subhead" align="center">Original Price: {{ sc.original_price }}</span>
-            <span class="md-subhead" align="center">Sales Price: {{ sc.sales_price }}</span>
-            <span class="md-subhead" align="center">人民币价格: {{sc.basePrice}} * (12%)税 * ({{sc.agent_percentage}}%)代购费 * (5.2)汇率 = {{sc.cnyPrice}} 元</span>
+            <span class="md-subhead" align="center" ng-if="sc.isSales">Sales Price: {{ sc.sales_price }}</span>
+            <span class="md-subhead" align="center">人民币单价: {{sc.basePrice}} * (12%)税 * ({{sc.agent_percentage}}%)代购费 * (5.2)汇率 = {{sc.cnyPrice}} 元</span>
           </md-card-title-text>
         </md-card-title>
         <!--   Item Color, Sizes and Quantity   -->
