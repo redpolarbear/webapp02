@@ -12,7 +12,7 @@
           <form name="linkInputForm" ng-submit="sc.getScrapedItem()">
             <md-input-container class="md-block">
               <label>Do you find the key?</label>
-              <input placeholder="Show me your key..." required md-no-asterisk name="key" ng-model="sc.url" ng-disabled="sc.disableLinkInput">
+              <input title="Enter your website" type="url" pattern="https?://.+" placeholder="Show me your key..." required md-no-asterisk name="key" ng-model="sc.url" ng-disabled="sc.disableLinkInput">
               <div ng-messages="linkInputForm.key.$error" role="alert">
                 <div ng-message="required">This is required.</div>
               </div>

@@ -15,10 +15,10 @@
                 <input class="form-control" id="email" name="email" placeholder="Your Email" type="email" ng-model="ac.email" /> </div>
               <div class="form-group">
                 <label for="password" class="control-label">Password</label>
-                <input class="form-control" id="password" name="password" placeholder="Password" type="password" ng-model="ac.password1" /> </div>
+                <input class="form-control" id="password" name="password" placeholder="Password" type="password" ng-model="ac.password1" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}"/> </div>
               <div class="form-group">
                 <label for="password" id="reenterpassword" class="control-label">Re-enter Password</label>
-                <input class="form-control" id="reenterpassword" name="reenterpassword" placeholder="Re-enter Password" type="password" ng-model="ac.password2" /> </div>
+                <input class="form-control" id="reenterpassword" name="reenterpassword" placeholder="Re-enter Password" type="password" ng-model="ac.password2" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}"/> </div>
               <button type="submit" class="btn btn-primary btn-block btn-block">Sign up</button>
             </form>
           </div>
