@@ -235,8 +235,15 @@
                   var itemid = JSON.parse(result.data).result.item_id;
                   var weidianProductUrl = 'http://weidian.com/item.html?itemID=' + itemid;
                   $mdDialog.show(weidianRedirectConfirm).then(function () {
+                    var orderedItem = {
+                      title:  ,
+                      url:
+
+                    };
+
                     window.open(weidianProductUrl,'_blank'); //open the weidian product link
                     //save to the order table - pending
+
                   }, function() {
                     $mdDialog.show(checkOutReminderAlert);
                   });

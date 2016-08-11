@@ -26,20 +26,20 @@ exports.getUserCollection = function (req, res) {
 
 //save the scrapedItem to user's collection
 exports.saveToCollection = function (req, res) {
-      var newCollectionItem = new collectionItem();
-      newCollectionItem.creator = req.body.creator;
-      newCollectionItem.scrapedItem = req.body._id;
-      newCollectionItem.save(function(err) {
-        if (err) {
-          res.json({
-            success: false
-          });
-        } else {
-          res.json({
-            success: true
-          });
-        };
+  var newCollectionItem = new collectionItem();
+  newCollectionItem.creator = req.body.creator;
+  newCollectionItem.scrapedItem = req.body._id;
+  newCollectionItem.save(function(err) {
+    if (err) {
+      res.json({
+        success: false
       });
+    } else {
+      res.json({
+        success: true
+      });
+    };
+  });
 };
 
 exports.removeFromCollection = function(req, res) {
