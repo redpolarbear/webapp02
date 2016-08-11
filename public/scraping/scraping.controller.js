@@ -236,8 +236,8 @@
                   var weidianProductUrl = 'http://weidian.com/item.html?itemID=' + itemid;
                   $mdDialog.show(weidianRedirectConfirm).then(function () {
                     var orderedItem = {
-                      title:  ,
-                      url:
+//                      title:  ,
+//                      url:
 
                     };
 

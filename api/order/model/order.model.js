@@ -32,4 +32,4 @@ var orderedItemSchema = new Schema({
   },
 });
 
-module.exports = mongoose.model('orderedItem', orderItemSchema);
+module.exports = mongoose.model('orderedItem', orderedItemSchema);

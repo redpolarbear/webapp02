@@ -33,10 +33,10 @@ exports.saveToOrder = function (req, res) {
     width: req.body.width
   };
   newOrderedItem.quantity = req.body.quantity;
-  newOrderedItem.imageLocalUrls: [{
+  newOrderedItem.imageLocalUrls = [{
     localUrls: req.body.localUrls
   }];
-  newOrderedItem.weidianProductUrl: req.body.weidianProductUrl;
+  newOrderedItem.weidianProductUrl = req.body.weidianProductUrl;
   newOrderedItem.user = req.body.user_id;
   newOrderedItem.save(function(err) {
     if (err) {
