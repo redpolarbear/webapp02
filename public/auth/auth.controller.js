@@ -1,13 +1,15 @@
 (function () {
   'use strict';
   angular.module('authenticationMod')
-    .controller('AuthenticationController', ['$mdDialog', 'authService', '$location', AuthenticationController]);
+    .controller('AuthenticationController', ['$mdDialog', 'authService', 'authInputValidation', '$location', AuthenticationController]);
 
-  function AuthenticationController($mdDialog, authService, $location) {
+  function AuthenticationController($mdDialog, authService, authInputValidation, $location) {
     var self=this;
 
     self.login = login;
     self.signup = signup;
+    self.checkUsername = checkUsername;
+    self.checkEmail = checkEmail;
 
     function login() {
       var user = {
@@ -65,11 +67,38 @@
 
     };
 
+    function checkPassword(str) {
+      var re = /^((?=\S*?[A-Z])(?=\S*?[a-z])(?=\S*?[0-9]).{6,})\S$/;
+      return re.test(str);
+    };
 
+    function checkUsername() {
+      var re = /^\w{4,15}$/;
+      if (self.username !== undefined && re.test(self.username)) {
+        self.usernameStatus = 'valid-processing';
+        authInputValidation.checkUsername({username: self.username}).then(function(msg) {
+          self.usernameStatus = 'input-valid';
+        }, function(errMsg) {
+          self.usernameStatus = 'input-error';
+        });
+      } else {
+        self.usernameStatus = 'input-invalid';
+      }
+    };
 
-
-
-
+    function checkEmail() {
+      var re = /^(([a-zA-Z]|[0-9])|([-]|[_]|[.]))+[@](([a-zA-Z0-9])|([-])){2,63}[.](([a-zA-Z0-9]){2,63})+$/gi;
+      if (self.email !== undefined && re.test(self.email)) {
+        self.emailStatus = 'valid-processing';
+        authInputValidation.checkEmail({email: self.email}).then(function(msg) {
+          self.emailStatus = 'input-valid';
+        }, function(errMsg) {
+          self.emailStatus = 'input-error';
+        });
+      } else {
+        self.emailStatus = 'input-invalid';
+      }
+    };
 
   };
 })();

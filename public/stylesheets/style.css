@@ -116,3 +116,45 @@ p.secondary {
 .mini-action-button:hover {
   background-color: #EEEEEE !important;
 }
+
+.input-valid {
+  background-image: url(/assets/images/valid.png);
+  background-position: 98%;
+  background-size: 12px 12px;
+  background-repeat: no-repeat;
+}
+
+.input-error {
+  background-image: url(/assets/images/error.png);
+  background-position: 98%;
+  background-size: 12px 12px;
+  background-repeat: no-repeat;
+}
+
+.input-invalid {
+  background-image: url(/assets/images/invalid.png);
+  background-position: 98%;
+  background-size: 12px 12px;
+  background-repeat: no-repeat;
+}
+
+.valid-processing {
+  background-image: url(/assets/images/processing.gif);
+  background-position: 98%;
+  background-size: 12px 12px;
+  background-repeat: no-repeat;
+}
+
+/*
+input:required:invalid, input:focus:invalid {
+    background-image: url(/assets/images/invalid.png);
+    background-position: 98%;
+    background-repeat: no-repeat;
+}
+
+input:required:valid {
+    background-image: url(/assets/images/valid.png);
+    background-position: 98%;
+    background-repeat: no-repeat;
+}
+*/

@@ -3,6 +3,7 @@ var User = require('./model/user.model');
 var config = require('../../config/index');
 //var jwt = require('jwt-simple');
 var jwt = require('jsonwebtoken');
+
 exports.signup = function (req, res) {
   if (!req.body.username || !req.body.email || !req.body.password) {
     res.json({
@@ -36,13 +37,14 @@ exports.signup = function (req, res) {
     });
   }
 };
+
 exports.login = function (req, res) {
   User.findOne({
     email: req.body.email
   }, function (err, user) {
     if (err) throw err;
     if (!user) {
-      res.send({
+      res.json({
         success: false
         , msg: 'Authentication failed. User not found.'
       });
@@ -61,7 +63,7 @@ exports.login = function (req, res) {
             , msg: 'Successfully logged in.'
           });
         } else {
-          res.send({
+          res.json({
             success: false
             , msg: 'Authentication failed. Wrong password.'
           });
@@ -70,4 +72,43 @@ exports.login = function (req, res) {
     }
   });
 };
+
+exports.checkUsername = function (req, res) {
+  User.findOne({
+    username: req.body.username
+  }, function (err, user) {
+    if (err) throw err;
+    if (!user) {
+      res.json({
+        isAvailable: true, //the username inputed is ready to go
+        msg: 'Username is OK to go.'
+      });
+    } else {
+      res.json({
+        isAvailable: false, //already existed
+        msg: 'Username is already existed.'
+      });
+    };
+  });
+};
+
+exports.checkEmail = function (req, res) {
+  User.findOne({
+    email: req.body.email
+  }, function (err, user) {
+    if (err) throw err;
+    if (!user) {
+      res.json({
+        isAvailable: true, //the username inputed is ready to go
+        msg: 'Email is OK to go.'
+      });
+    } else {
+      res.json({
+        isAvailable: false, //already existed
+        msg: 'Email is already existed.'
+      });
+    };
+  });
+};
+
 

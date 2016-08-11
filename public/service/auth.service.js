@@ -96,7 +96,39 @@
         return $q.reject(response);
       }
     };
-  }).config(function ($httpProvider) {
+  }).factory('authInputValidation', function ($q, $http) {
+    return {
+      checkUsername: checkUsername
+      , checkEmail: checkEmail
+    };
+    function checkUsername(username) {
+      return $q(function (resolve, reject) {
+        $http.post('/auth/checkusername', username).then(function (result) {
+          console.log(result);
+          if (result.data.isAvailable) {
+            resolve(result.data.msg);
+          }
+          else {
+            reject(result.data.msg);
+          }
+        });
+      });
+    };
+
+    function checkEmail(email) {
+      return $q(function (resolve, reject) {
+        $http.post('/auth/checkemail', email).then(function (result) {
+
+          if (result.data.isAvailable) {
+            resolve(result.data.msg);
+          }
+          else {
+            reject(result.data.msg);
+          }
+        });
+      });
+    };
+ }).config(function ($httpProvider) {
     $httpProvider.interceptors.push('AuthInterceptor');
   })
 })();
