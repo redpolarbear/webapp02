@@ -15,7 +15,7 @@ exports.getUserOrder = function (req, res) {
   orderItem.find({creator: creator})
     .populate('scrapedItem')
     .exec(function(err, orderItems) {
-      if (err) console.log(err);
+      if (err) throw err;
       res.json(orderItems);
     });
 };

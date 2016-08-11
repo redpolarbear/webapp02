@@ -19,9 +19,7 @@ function getToken(callback) {
   TokenItem.findOne({}).sort({
     createTime: -1
   }).exec(function (err, newToken) {
-    if (err) {
-      console.log(err);
-    };
+    if (err) throw err;
     if (!newToken || !validateToken(newToken)) {
       console.log('no token existing, renewToken now');
       renewToken(function (newToken) {

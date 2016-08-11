@@ -104,7 +104,6 @@
     function checkUsername(username) {
       return $q(function (resolve, reject) {
         $http.post('/auth/checkusername', username).then(function (result) {
-          console.log(result);
           if (result.data.isAvailable) {
             resolve(result.data.msg);
           }
@@ -118,7 +117,6 @@
     function checkEmail(email) {
       return $q(function (resolve, reject) {
         $http.post('/auth/checkemail', email).then(function (result) {
-
           if (result.data.isAvailable) {
             resolve(result.data.msg);
           }

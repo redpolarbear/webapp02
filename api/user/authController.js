@@ -5,37 +5,22 @@ var config = require('../../config/index');
 var jwt = require('jsonwebtoken');
 
 exports.signup = function (req, res) {
-  if (!req.body.username || !req.body.email || !req.body.password) {
+  var newUser = new User({
+    username: req.body.username
+    , email: req.body.email
+    , password: req.body.password
+  });
+  // save the user
+  newUser.save(function (err, newUser) {
+    var token = jwt.sign(newUser, config.secret, {
+      expiresIn: '1d'
+    });
     res.json({
-      success: false
-      , msg: 'Please input name and password.'
+      success: true
+      , token: 'Bearer ' + token
+      , msg: 'Successfully created new user.'
     });
-  }
-  else {
-    var newUser = new User({
-      username: req.body.username
-      , email: req.body.email
-      , password: req.body.password
-    });
-    // save the user
-    newUser.save(function (err, newUser) {
-      if (err) {
-        return res.json({
-          success: false
-          , msg: 'Username or Email already exists.'
-        });
-      };
-      var token = jwt.sign(newUser, config.secret, {
-        expiresIn: '1d'
-      });
-      console.log(token);
-      res.json({
-        success: true
-        , token: 'Bearer ' + token
-        , msg: 'Successfully created new user.'
-      });
-    });
-  }
+  });
 };
 
 exports.login = function (req, res) {

@@ -17,7 +17,7 @@ exports.getUserCollection = function (req, res) {
   collectionItem.find({creator: creator})
     .populate('scrapedItem')
     .exec(function(err, collectionItems) {
-      if (err) console.log(err);
+      if (err) throw err;
       res.json(collectionItems);
       console.log(collectionItems);
     });
@@ -46,7 +46,7 @@ exports.removeFromCollection = function(req, res) {
   var _id = req.params.id;
   collectionItem.findByIdAndRemove(_id, function(err) {
     if (err) {
-      console.log(err);
+      throw err;
     } else {
       res.json({
         success: true,

@@ -21,7 +21,7 @@ var userSchema = mongoose.Schema({
 	, agent_percentage: {
 		type: Number
 		, required: true
-		, 'default': 40
+		, 'default': 30
 	}
 	, role: {
 		type: String
@@ -74,9 +74,6 @@ userSchema.methods.comparePassword = function (passw, cb) {
         cb(null, isMatch);
     });
 };
-
-
-
 
 // create the model for users and expose it to our app
 module.exports = mongoose.model('User', userSchema);
