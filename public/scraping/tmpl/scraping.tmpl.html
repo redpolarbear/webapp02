@@ -40,11 +40,11 @@
         <md-card-title>
           <md-card-title-text>
             <span class="md-headline" align="center">{{ sc.item.title }}</span>
-            <span class="md-subhead" align="center">{{ sc.item.description }}</span>
             <!-- get the price from the sku -->
             <span class="md-subhead" align="center">Original Price: {{ sc.original_price }}</span>
             <span class="md-subhead" align="center" ng-if="sc.isSales">Sales Price: {{ sc.sales_price }}</span>
             <span class="md-subhead" align="center">人民币单价: {{sc.basePrice}} * (12%)税 * ({{sc.agent_percentage}}%)代购费 * (5.2)汇率 = {{sc.cnyPrice}} 元</span>
+            <span class="md-subhead" align="center">{{ sc.item.description }}</span>
           </md-card-title-text>
         </md-card-title>
         <!--   Item Color, Sizes and Quantity   -->
@@ -72,8 +72,8 @@
           <!--   Item Action "Save to the Collections" and "Save to Weidian(buy)"    -->
           <div layout="row" flex-gt-sm layout-align="center">
             <md-card-actions>
-              <md-button class="md-raised md-primary" ng-click="sc.addToMyCollections()">Add to My Collections</md-button>
-              <md-button class="md-raised md-accent" ng-click="sc.checkOut()">Check-out</md-button>
+              <md-button class="md-raised md-primary" ng-click="sc.addToMyCollections()" ng-disabled="sc.disableFavorites">Favorites</md-button>
+              <md-button class="md-raised md-accent" ng-click="sc.checkOut()" ng-disabled="sc.disableCheckout">Check-out</md-button>
             </md-card-actions>
           </div>
           <div ng-cloak class="detail-tabs">

@@ -86,19 +86,4 @@ exports.uploadProduct = function (req, res) {
   // request.post({url:'http://service.com/upload', form: {key:'value'}}, function(err,httpResponse,body){ /* ... */ })
 };
 
-exports.saveOrder = function (req, res) {
-  var newOrderItem = new orderItem();
-  newWeidianProduct.item_id = req.body.item_id;
-  newWeidianProduct.scrapedItem_id = req.body.scrapedItem_id;
-  newWeidianProduct.save(function (err, newWeidianProduct) {
-    if (err) {
-      res.send('error');
-    }
-    else {
-      res.send(newWeidianProduct);
-    };
-  });
-};
-
-
 // https://api.vdian.com/api?param={"price":"1.5","stock":"5","itemName":"接口测试商品1","sku":[{"stock":1,"title":"型号1","price":"1"},{"stock":1,"title":"型号2","price":"1.5"}],"bigImgs":["http://wd.geilicdn.com/vshop395640-1390204649-1.jpg","http://wd.geilicdn.com/vshop395640-1390204649-2.jpg"],"titles":["图片1","图片2"],"cate_id":"747864,747860","free_delivery":"1","remote_free_delivery":"1"}&public={"method":"vdian.item.add","access_token":"xxx","version":"1.1","format":"json"}

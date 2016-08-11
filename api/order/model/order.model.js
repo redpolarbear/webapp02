@@ -3,7 +3,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var orderedItemSchema = new Schema({
+var orderItemSchema = new Schema({
   title: String,
   url: String,
   partnumber: String,
@@ -11,17 +11,17 @@ var orderedItemSchema = new Schema({
     cny_price: String,
     color: String,
     size: String,
-    width: String
+    width: {
+      type: String,
+      'default': 'N/A'
+    }
   },
   quantity: Number,
   imageLocalUrls: [{
     localUrls: [String]
   }],
   weidianProductUrl: String,
-  user: {
-    type: Schema.ObjectId,
-    ref: 'User'
-  },
+  creator: String,
   scrapedItem: {
     type: Schema.ObjectId,
     ref: 'scrapedItem'
@@ -32,4 +32,4 @@ var orderedItemSchema = new Schema({
   },
 });
 
-module.exports = mongoose.model('orderedItem', orderedItemSchema);
+module.exports = mongoose.model('orderItem', orderItemSchema);

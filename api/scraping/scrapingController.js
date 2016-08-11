@@ -86,9 +86,10 @@ exports.saveItem = function (req, res) {
 
   newScrapedItem.save(function (err, newScrapedItem) {
     if (err) {
+      throw err;
       res.send('error');
     } else {
-      res.send(newScrapedItem);
+      res.json(newScrapedItem);
     };
   });
 };

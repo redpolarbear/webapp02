@@ -11,7 +11,7 @@
                           .cancel('NO');
     var weidianRedirectConfirm = $mdDialog.confirm()
                                    .title('ARE YOU SURE?')
-                                   .textContent('Open the Weidian Link Now???')
+                                   .textContent('The item has been saved to the Order. Open the Weidian Link Now???')
                                    .ok('YES')
                                    .cancel('NO');
     var resetConfirm = $mdDialog.confirm().title('ARE YOU SURE?').textContent('Close the door?').ok('YES').cancel('NO');
@@ -39,6 +39,9 @@
     if (authService.isAuthenticated) {
       userProfile = authService.getUserCredentials()._doc;
     };
+    var newOrderedItem = {};
+    newOrderedItem.creator = userProfile.username;
+
 
     function getScrapedItem() {
       $mdDialog.show(scrapeConfirm).then(function () {
@@ -106,6 +109,7 @@
           collectionService.saveToCollection(savedScrapedItem.data).then(function (savedCollectionItem) {
             if (savedCollectionItem.data.success) {
               $mdDialog.show(successSaveAlert);
+              self.disableFavorites = true;
             }
             else {
               $mdDialog.show(failureSaveAlert);
@@ -206,7 +210,7 @@
             $mdDialog.show(failureSaveAlert);
           }
           else {
-            console.log(savedItem);
+            //fill in the weidian product model
             var newWeidianProduct = {
               itemName: ''
               , price: self.cnyPrice * self.quantity
@@ -219,36 +223,52 @@
               , merchant_code: savedItem.data._id
               , access_token: ''
             };
-            newWeidianProduct.itemName = savedItem.data.title + '\n' + 'COLOR: ' + self.color + '\n' + 'SIZE: ' + self.size + '\n' + 'Quantity: ' + self.quantity;
-            var imageLocalUrl = savedItem.data.imageLocalUrls.filter(findObjectbyColor(self.color))[0].localUrls[0];
+            newWeidianProduct.itemName = savedItem.data.source + ' - ' + savedItem.data.title + '\n' + 'COLOR: ' + self.color + '\n' + 'SIZE: ' + self.size + '\n' + 'Quantity: ' + self.quantity;
+            var imageLocalUrls = savedItem.data.imageLocalUrls.filter(findObjectbyColor(self.color))[0].localUrls;
             newWeidianProduct.titles = ['Product Image'];
+
+            //fill in the order model
+            newOrderedItem.title = savedItem.data.source + ' - ' + savedItem.data.title;
+            newOrderedItem.url = savedItem.data.url;
+            newOrderedItem.partnumber = savedItem.data.partnumber;
+            newOrderedItem.orderedSku = {
+                  cny_price: self.cnyPrice * self.quantity,
+                  color: self.color,
+                  size: self.size,
+                  width: self.width?self.width:'N/A'
+            };
+            newOrderedItem.quantity = self.quantity;
+            newOrderedItem.scrapedItem = savedItem.data._id;
+            newOrderedItem.imageLocalUrls = [{localUrls: imageLocalUrls}];
+
+
             weidianTokenService.weidianGetToken().then(function (tokenObj) {
               newWeidianProduct.access_token = tokenObj.data.result.access_token; //callback return is the JSON
               var imgFile = {
-                img: [imageLocalUrl]
+                img: [imageLocalUrls[0]]
                 , access_token: newWeidianProduct.access_token
               };
               weidianService.uploadImage(imgFile).then(function (imgURL) {
                 newWeidianProduct.bigImgs = [JSON.parse(imgURL.data).result];
                 weidianService.uploadProduct(newWeidianProduct).then(function (result) {
-                  console.log(result);
                   var itemid = JSON.parse(result.data).result.item_id;
                   var weidianProductUrl = 'http://weidian.com/item.html?itemID=' + itemid;
-                  $mdDialog.show(weidianRedirectConfirm).then(function () {
-                    var orderedItem = {
-//                      title:  ,
-//                      url:
-
+                  newOrderedItem.weidianProductUrl = weidianProductUrl;
+                  //saved to the order
+                  orderService.saveOrder(newOrderedItem).then(function(result) {
+                    if (result.data.success) {
+                      $mdDialog.show(weidianRedirectConfirm).then(function () {
+                        window.open(weidianProductUrl,'_blank'); //open the weidian product link
+                      }, function() {
+                        $mdDialog.show(checkOutReminderAlert);
+                      });
+                      self.disableCheckout = true;
+                    } else {
+                      $mdDialog.show(failureSaveAlert);
                     };
-
-                    window.open(weidianProductUrl,'_blank'); //open the weidian product link
-                    //save to the order table - pending
-
-                  }, function() {
-                    $mdDialog.show(checkOutReminderAlert);
+                  }, function () {//save to order error
+                    $mdDialog.show(failureSaveAlert);
                   });
-
-
                 }, function () { //upload product error
                   $mdDialog.show(failureAlert);
                 });

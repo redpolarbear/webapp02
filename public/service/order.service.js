@@ -9,14 +9,14 @@ orderService.$inject = ['$http'];
 function orderService($http) {
     return {
 //        getUserCollection: getUserCollection,
-        saveToOrder: saveToOrder
+        saveOrder: saveOrder
     };
 
 //    function getUserCollection(creator) {
 //      return $http.get('/api/collection/creator/' + creator);
 //    };
 //
-    function saveToOrder(newScrapedItem) {
-      return $http.post('/api/savetoorder', newScrapedItem);
+    function saveOrder(newOrderedItem) {
+      return $http.post('/api/order/action/save/', newOrderedItem);
     };
 }
