@@ -12,11 +12,15 @@ var utils = require('../utils/utils.js');
 //get user's collections
 exports.getUserOrder = function (req, res) {
   var creator = req.params.creator;
-  orderItem.find({creator: creator}) //need to be changed
+  orderItem.find({creator: creator})
     .populate('scrapedItem')
     .exec(function(err, orderItems) {
-      if (err) throw err;
-      res.json(orderItems);
+      console.log(orderItems);
+      if (err) {
+        throw err;
+      } else {
+        res.json(orderItems);
+      }
     });
 };
 

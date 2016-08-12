@@ -13,7 +13,6 @@ var expressJWT = require('express-jwt');
 
 var router = express.Router();
 
-
 //Note: router.use(expressJWT({ secret: config.secret}));
 router.use(auth.isLoggedin());
 router.post('/scrape', scrapingController.scrapeItem);
@@ -28,6 +27,7 @@ router.get('/collection/:creator', auth.isParamsLegal, collectionController.getU
 router.post('/collection/action/save', collectionController.saveToCollection);
 router.delete('/collection/action/remove/:id', collectionController.removeFromCollection);
 
+router.get('/order/:creator', auth.isParamsLegal, orderController.getUserOrder);
 router.post('/order/action/save', orderController.saveToOrder);
 
 

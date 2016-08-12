@@ -29,7 +29,7 @@ angular.
           templateUrl: 'promo/tmpl/promo.tmpl.html',
           controller: 'PromoController'
         })
-        .when('/order', {
+        .when('/order/:creator', {
           templateUrl: 'order/tmpl/order.tmpl.html',
           controller: 'OrderController'
         })

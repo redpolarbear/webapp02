@@ -10,18 +10,17 @@ var utils = require('../utils/utils.js');
 //get user's collections
 exports.getUserCollection = function (req, res) {
   var creator = req.params.creator;
-  var userName = req.user._doc.username;
-  if (creator !== userName) {
-    res.send(401);
-  } else {
-  collectionItem.find({creator: creator})
-    .populate('scrapedItem')
-    .exec(function(err, collectionItems) {
-      if (err) throw err;
-      res.json(collectionItems);
-      console.log(collectionItems);
-    });
-  };
+//  var userName = req.user._doc.username;
+//  if (creator !== userName) {
+//    res.send(401);
+//  } else {
+    collectionItem.find({creator: creator})
+      .populate('scrapedItem')
+      .exec(function(err, collectionItems) {
+        if (err) throw err;
+        res.json(collectionItems);
+      });
+//  };
 };
 
 //save the scrapedItem to user's collection
