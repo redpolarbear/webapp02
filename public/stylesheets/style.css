@@ -145,5 +145,74 @@ p.secondary {
   background-repeat: no-repeat;
 }
 
+#order-view {
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+#order-view h1, h2 {
+  text-align: center;
+}
+
+#order-table {
+  box-shadow: 0 1px 10px rgba(0, 0, 0, 0.2);
+}
+#order-table thead tr th {
+  background-color: #3F51B5;
+  color: white;
+  border-collapse: collapse;
+  padding: .8rem; font-size: 1.4rem;
+}
+#order-table tbody td {
+  padding: 0.8rem;
+  font-size:1.4rem;
+}
+
+#order-table tbody tr:not(:last-child) {
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+}
+
+@media screen and (max-width: 769px) {
+
+  #order-view {
+    max-width: 512px;
+  }
+
+  #order-table thead {
+    display: none;
+  }
+
+  #order-table tbody td {
+    display: block;
+    padding: 0.6rem;
+  }
+
+  #order-table tbody tr td:first-child {
+    background: #3F51B5;
+    color: white;
+    display: block;
+  }
+
+  #order-table tbody tr{
+    margin-bottom: 20px;
+  }
+
+  #order-table tbody tr td:first-child a {
+    color: white;
+  }
+
+  #order-table tbody tr {
+    position: relative;
+    box-shadow: 0 1px 10px rgba(0, 0, 0, 0.2);
+  }
+
+  #order-table tbody td:before {
+    content: attr(data-title);
+    font-weight: bold;
+    display: inline-block;
+    width: 33%;
+  }
 
 
+}

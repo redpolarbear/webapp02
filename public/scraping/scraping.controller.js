@@ -249,6 +249,7 @@
                 , access_token: newWeidianProduct.access_token
               };
               weidianService.uploadImage(imgFile).then(function (imgURL) {
+                //need to check the return status_code from weidian 0==success
                 newWeidianProduct.bigImgs = [JSON.parse(imgURL.data).result];
                 weidianService.uploadProduct(newWeidianProduct).then(function (result) {
                   var itemid = JSON.parse(result.data).result.item_id;

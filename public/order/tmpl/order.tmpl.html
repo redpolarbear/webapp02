@@ -1,31 +1,25 @@
-<div class="container" ng-controller="OrderController as oc" ng-cloak>
-  <table class="order-table">
-    <caption>My Orders</caption>
+<div id="order-view" class="container" ng-controller="OrderController as oc" ng-cloak>
+  <h1>My Orders</h1>
+  <h2>xxxxxx you may click the button here to refresh the status of the order</h2>
+  <table id="order-table" class="table table-striped table-responsive">
     <thead>
       <tr>
-        <th scope="col">Order Title</th>
-        <th scope="col">Order Status</th>
-        <th scope="col">Weidian Product Link</th>
-        <th scope="col">Color</th>
-        <th scope="col">Size</th>
-        <th scope="col">Width</th>
-        <th scope="col">Quantity</th>
-        <th scope="col">CNY PRICE</th>
-        <th scope="col">Detail</th>
+        <th>Order Title</th>
+        <th>Order Status</th>
+        <th>Weidian Product Link</th>
+        <th>Color</th>
+        <th>Size</th>
+        <th>Width</th>
+        <th>Quantity</th>
+        <th>CNY PRICE</th>
+        <th>Detail</th>
       </tr>
     </thead>
-<!--
-    <tfoot>
-      <tr>
-        <td colspan="7">Sources: <a href="http://en.wikipedia.org/wiki/List_of_highest-grossing_animated_films" rel="external">Wikipedia</a> &amp; <a href="http://www.boxofficemojo.com/genres/chart/?id=animation.htm" rel="external">Box Office Mojo</a>. Data is current as of September 1, 2015.</td>
-      </tr>
-    </tfoot>
--->
     <tbody>
       <tr ng-repeat="(index, item) in oc.orderItems">
-        <th scope="row"> <a href="{{item.url}}" target="_blank">{{ item.title }}</a></th>
+        <td data-title="Order Title"><a href="{{item.url}}" target="_blank">{{ item.title }}</a></td>
         <td data-title="Order Status"></td>
-        <td data-title="Weidian Product Link"> <a target="_blank" href="{{ item.weidianProductUrl }}"> Weidian Link </a></td>
+        <td data-title="Weidian Link"> <a target="_blank" href="{{ item.weidianProductUrl }}"> Weidian Link </a></td>
         <td data-title="Color"> {{ item.orderedSku.color }}</td>
         <td data-title="Size">{{ item.orderedSku.size }}</td>
         <td data-title="Width">{{ item.orderedSku.width }}</td>
