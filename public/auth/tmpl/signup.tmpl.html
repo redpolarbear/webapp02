@@ -8,16 +8,16 @@
           <div class="well">
             <form name="signupForm" id="signupForm" method="POST" ng-submit="ac.signup()">
               <div class="form-group">
-                <label for="username" class="control-label">Username</label>
+                <label for="username" class="control-label">Username <span style="color:red;font-size: 1.3em">*</span> </label>
                 <input required class="form-control" ng-class="ac.usernameStatus" id="username" name="username" placeholder="Your Name" type="text" ng-model="ac.username"  ng-blur="ac.checkUsername()"/> </div>
               <div class="form-group">
-                <label for="email" class="control-label">Email</label>
+                <label for="email" class="control-label">Email <span style="color:red;font-size: 1.3em">*</span> </label>
                 <input required class="form-control" ng-class="ac.emailStatus" id="email" name="email" placeholder="Your Email" type="email" ng-model="ac.email"  ng-blur="ac.checkEmail()" /> </div>
               <div class="form-group">
-                <label for="password" class="control-label">Password</label>
+                <label for="password" class="control-label">Password <span style="color:red;font-size: 1.3em">*</span> </label>
                 <input title="Password must contain at least 6 characters, including UPPER/lowercase and numbers" required class="form-control" ng-class="ac.passwordStatus1" id="password" name="password" placeholder="Password" type="password" ng-model="ac.password1" ng-blur="ac.checkPassword1()"/> </div>
               <div class="form-group">
-                <label for="password" id="reenterpassword" class="control-label">Re-enter Password</label>
+                <label for="password" id="reenterpassword" class="control-label">Re-enter Password <span style="color:red;font-size: 1.3em">*</span> </label>
                 <input title="Please enter the same Password as above." required class="form-control" ng-class="ac.passwordStatus2" id="reenterpassword" name="reenterpassword" placeholder="Re-enter Password" type="password" ng-model="ac.password2" ng-blur="ac.checkPassword2()"/> </div>
               <button type="submit" class="btn btn-primary btn-block btn-block">Sign up</button>
             </form>

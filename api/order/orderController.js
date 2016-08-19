@@ -1,13 +1,9 @@
 'use strict';
 
-var _ = require('lodash');
-var request = require('request');
 var scrapedItem = require('../scraping/model/scraping.model');
 var orderItem = require('../order/model/order.model');
 var user = require('../user/model/user.model');
 var express = require('express');
-var path = require('path');
-var utils = require('../utils/utils.js');
 
 //get user's collections
 exports.getUserOrder = function (req, res) {
@@ -15,7 +11,7 @@ exports.getUserOrder = function (req, res) {
   orderItem.find({creator: creator})
     .populate('scrapedItem')
     .exec(function(err, orderItems) {
-      console.log(orderItems);
+      // console.log(orderItems);
       if (err) {
         throw err;
       } else {

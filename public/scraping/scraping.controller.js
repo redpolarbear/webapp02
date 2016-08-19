@@ -2,7 +2,7 @@
   'use strict';
   angular.module('scrapingMod').controller('ScrapingController', ['$mdDialog', 'scrapingService', 'urlValidationService', '$sce', 'weidianTokenService', 'collectionService', 'orderService', 'weidianService', 'authService', ScrapingController]);
 
-  function ScrapingController($mdDialog, scrapingService, urlValidationService, $sce, weidianTokenService, collectionService, orderService, weidianService, authService, $log) {
+  function ScrapingController($mdDialog, scrapingService, urlValidationService, $sce, weidianTokenService, collectionService, orderService, weidianService, authService, ) {
     var self = this;
     var scrapeConfirm = $mdDialog.confirm()
                           .title('ARE YOU SURE?')
@@ -38,7 +38,7 @@
     self.checkOut = checkOut;
     if (authService.isAuthenticated) {
       userProfile = authService.getUserCredentials()._doc;
-    };
+    }
     var newOrderedItem = {};
     newOrderedItem.creator = userProfile.username;
 
@@ -53,7 +53,7 @@
         //show the loading progress circular
         showWIPDialog();
         //validate the input url (func)
-        urlValidationService.urlValidationResult(link).then(function (response) {
+        urlValidationService.urlValidationResult(link).then(function () {
           //get the scrape detail by callback function
           scrapingService.getScrapedDetail(link).then(function (result) {
             //return 'result' = if correct -> object.data is object if not correct -> object.data is 'error'
@@ -69,7 +69,7 @@
               $mdDialog.hide();
               $mdDialog.show(successAlert);
               self.item = result.data;
-              console.log(self.item); //sample
+              // console.log(self.item); //sample
               //present the Source, Icon and the From
               self.source = sourceName(self.item.url).sourceName;
               self.brandIconUrl = sourceName(self.item.url).brandIcon;
@@ -78,7 +78,7 @@
               //load the colors
               for (var i = 0; i < self.item.skus.length; i++) {
                 self.colors.push(self.item.skus[i].color);
-              };
+              }
               //add the creator to the self.item
               self.item.creator = userProfile.username;
               self.agent_percentage = userProfile.agent_percentage;
@@ -93,7 +93,7 @@
               self.hidingArrowShowing = true; //show the arrow switch
               self.disableLinkInput = true; //disable the input
               self.detailShowing = true; //show the detail framework
-            };
+            }
           });
         }, function (response) { //404 error
           $mdDialog.show(failureAlert);
@@ -113,7 +113,7 @@
             }
             else {
               $mdDialog.show(failureSaveAlert);
-            };
+            }
           }, function () { //error when saving to the collection...
             $mdDialog.show(failureSaveAlert);
           });
@@ -123,7 +123,7 @@
       }, function () { //choose the "no" in the confirmation
         //
       });
-    };
+    }
 
     function sourceName(url) {
       var source_name;
@@ -145,7 +145,7 @@
         , brandIcon: brand_icon
       };
       return source;
-    };
+    }
     //change the color, will change the sizes and the images
     function colorOnChange(color) {
       self.original_price = self.item.skus.filter(findObjectbyColor(color))[0].original_price;
@@ -179,13 +179,13 @@
       var finalDescInfo = '';
       if (item.partnumber !== null && item.partnumber !== 'N/A') {
         finalDescInfo += '<p>Partnumber: ' + item.partnumber + '</p>';
-      };
+      }
       if (item.weight !== null && item.weight !== 'N/A') {
         finalDescInfo += '<p>Weight: ' + item.weight + '</p>';
-      };
+      }
       if (item.dimension !== null && item.dimension !== 'N/A') {
         finalDescInfo += '<p>Dimension: ' + item.dimension + '</p>';
-      };
+      }
       for (var i = 0; i < item.description_detail.length; i++) {
         finalDescInfo += '<p>' + item.description_detail[i].head + '</p>' + '<p>' + item.description_detail[i].desc + '</p>';
         if (item.description_detail[i].list.length >= 1) {
@@ -194,10 +194,10 @@
             finalDescInfo += '<li>' + element + '</li>';
           });
           finalDescInfo += '</ul>';
-        };
-      };
+        }
+      }
       return finalDescInfo;
-    };
+    }
 
     function checkOut() {
       $mdDialog.show(checkOutConfirm).then(function () { //if "yes"
@@ -266,7 +266,7 @@
                       self.disableCheckout = true;
                     } else {
                       $mdDialog.show(failureSaveAlert);
-                    };
+                    }
                   }, function () {//save to order error
                     $mdDialog.show(failureSaveAlert);
                   });
@@ -279,13 +279,13 @@
             }, function () { //getting token error
               $mdDialog.show(failureAlert);
             });
-          };
+          }
         }, function () { //error when saving...
           $mdDialog.show(failureSaveAlert);
         });
       }, function () { //choose the "no" in the confirmation
       });
-    };
+    }
     //showing the preparing the product dialog -
     //uploading the image to weidian
     //uploading the product to the weidian
@@ -302,8 +302,9 @@
         self.detailShowing = false;
         self.formShowing = true;
         self.hidingArrowShowing = false;
+        self.disableCheckout = false;
       });
-    };
+    }
 
     function showWIPDialog() {
       $mdDialog.show({
@@ -311,6 +312,6 @@
         , parent: angular.element(document.body)
         , clickOutsideToClose: false
       });
-    };
-  };
+    }
+  }
 })();

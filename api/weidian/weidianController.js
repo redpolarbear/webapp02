@@ -2,11 +2,6 @@
 
 var request = require('request');
 var fs = require('fs');
-var tokenCtrl = require('./weidianTokenController');
-var scrapedItem = require('../scraping/model/scraping.model');
-var weidianProduct = require('./model/weidian.product.model');
-var orderItem = require('../order/model/order.model');
-var collectionItem = require('../collection/model/collection.model');
 
 exports.uploadImage = function (req, res) {
   var weidianAPI_url = 'http://api.vdian.com/media/upload';
@@ -15,7 +10,7 @@ exports.uploadImage = function (req, res) {
   var formdata = {
     media: fs.createReadStream(uploadImgFile)
     , access_token: access_token
-  , };
+  };
   request.post({
     url: weidianAPI_url
     , formData: formdata
@@ -24,7 +19,7 @@ exports.uploadImage = function (req, res) {
       res.send('error');
     } else {
       res.json(body);
-    };
+    }
   });
 };
 
@@ -41,13 +36,13 @@ exports.appendImage = function(req, res) {
     format: 'json'
   };
   var requestUrl = weidianAPI_url + 'param=' + JSON.stringify(param) + '&public=' + JSON.stringify(public_param);
-  console.log(requestUrl);
+  // console.log(requestUrl);
   request.get(requestUrl, function(err, response, body) {
     if (err) {
       res.send('error');
     } else {
       res.json(body);
-    };
+    }
   })
 };
 
@@ -81,7 +76,7 @@ exports.uploadProduct = function (req, res) {
       res.send('error');
     } else {
       res.json(body);
-    };
+    }
   });
   // request.post({url:'http://service.com/upload', form: {key:'value'}}, function(err,httpResponse,body){ /* ... */ })
 };
